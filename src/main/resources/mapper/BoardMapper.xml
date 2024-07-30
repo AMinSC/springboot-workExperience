@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mybatis.BoardMapper">
+    <select id="searchData" resultType="com.example.demo.dto.BoardDTO">
+        SELECT 
+            u.MBR_NM as userName, 
+            u.MBR_USER_ID as userId, 
+            u.MBR_PHONE as userPhon, 
+            u.BZPP_ORDER_NO as orderNo,
+            p.PDT_NO as prodNo,
+            p.PDT_NM as prodName,
+            b.BZPP_NM as companyName,
+            b.BZPP_PHONE as companyPhon,
+            b.BZPP_ADDR as companyAddr,
+            u.DEL_YN as dormantUser
+        FROM 
+            TBAXMM003 u
+        JOIN 
+            TBAXSM001 s ON u.SITE_SQNO = s.SITE_SQNO
+        JOIN 
+            TBAXPM001 p ON u.MBR_SQNO = p.MBR_SQNO
+        JOIN 
+            TBAXBM001 b ON s.BZPP_SQNO = b.BZPP_SQNO
+        WHERE
+            1=1
+            <if test="userName != null and userName != ''">
+                AND u.MBR_NM LIKE '%' || #{userName} || '%'
+            </if>
+            <if test="orderNo != null and orderNo != ''">
+                AND u.BZPP_ORDER_NO LIKE '%' || #{orderNo} || '%'
+            </if>
+            <if test="companyName != null and companyName != ''">
+                AND b.BZPP_NM LIKE '%' || #{companyName} || '%'
+            </if>
+            <if test="prodName != null and prodName != ''">
+                AND p.PDT_NM LIKE '%' || #{prodName} || '%'
+            </if>
+    </select>
+
+    <update id="updateDormantUser">
+        UPDATE TBAXMM003
+        SET DEL_YN = #{dormantUser}
+        WHERE MBR_SQNO = #{id}
+    </update>
+</mapper>
