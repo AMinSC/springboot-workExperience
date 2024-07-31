@@ -1,6 +1,8 @@
 package com.example.demo.mybatis;
 
 import com.example.demo.dto.BoardDTO;
+import com.example.demo.dto.UserDTO;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -15,4 +17,5 @@ public interface BoardMapper {
     
     void updateDormantUser(@Param("id") String id, @Param("dormantUser") String dormantUser);
     
+    UserDTO getUserDetail(String userId);
 }

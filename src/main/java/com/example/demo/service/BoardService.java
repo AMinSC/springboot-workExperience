@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.BoardDTO;
+import com.example.demo.dto.UserDTO;
 import com.example.demo.mybatis.BoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,5 +20,9 @@ public class BoardService {
     
     public void updateDormantUser(String id, String dormantUser) {
     	boardMapper.updateDormantUser(id, dormantUser);
+    }
+    
+    public UserDTO getUserDetail(String userId) {
+    	return boardMapper.getUserDetail(userId);
     }
 }

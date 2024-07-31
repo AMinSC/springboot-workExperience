@@ -6,12 +6,13 @@
     <title>Data Table</title>
     
     <link rel="stylesheet" type="text/css" media="screen" href="/css/jquery-ui.min.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/ui.jqgrid.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/ui.jqgrid.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="/css/jquery.contextMenu.min.css">
     <script src="/js/jquery-3.7.1.min.js" type="text/javascript"></script>
     <script src="/js/jquery-ui.min.js" type="text/javascript"></script>
     <script src="/js/jquery.jqgrid.min.js" type="text/javascript"></script>
     <script src="/js/jquery.contextMenu.min.js" type="text/javascript"></script>
+    
     
     <script>
         $(function(){
@@ -110,20 +111,67 @@
                     var rowId = $(this).attr("id");
                     var rowData = $("#list").jqGrid('getRowData', rowId);
                     if (key === "userDetail") {
-                        alert("View Record\n" +
-                            "ID: " + rowData.userId + "\n" +
-                            "Name: " + rowData.userName + "\n" +
-                            "Phone: " + rowData.userPhon);
+                    	$.ajax({
+                    		url: '/api/userDetail',
+                    		method: 'POST',
+                    		contentType: 'application/json',
+                    		data: JSON.stringify({ userId: rowData.userId }),
+                    		success: function(data) {
+                    			console.log(data)
+                    			$("#detail").html(
+                    					"회원명: " + data.mbrNm + "<br>" +
+                                        "회원아이디: " + data.mbrUserId + "<br>" +
+                                        "회원폰번호: " + formatPhoneNumber(data.mbrPhone) + "<br>" +
+                                        "주문번호: " + data.bzppOrderNo + "<br>" +
+                                        "주소: " + data.mbrAddr + "<br>" +
+                                        "회원번호: " + data.mbrNo + "<br>" +
+                                        "사업자폰: " + formatPhoneNumber(data.mbrTel) + "<br>" +
+                                        "삭제유무: " + data.delYn
+                                        );
+                    			$("#detail").dialog({
+                    				title: "회원정보상세",
+                    				modal: true,
+                    				buttons: {
+                    					Ok: function() {
+                    						$(this).dialog("close");
+                    					}
+                    				}
+                    			});
+                    		},
+                    		error: function(xhr, status, error) {
+                    			alert('Error: ' + error);
+                    		}
+                    	});
                     } else if (key === "companyDetail") {
-                        alert("Edit Record\n" +
-                            "ID: " + rowData.userId + "\n" +
-                            "Name: " + rowData.userName + "\n" +
-                            "Phone: " + rowData.userPhon);
+                    	$("#detail").html(
+                                "ID: " + rowData.userId + "<br>" +
+                                "Name: " + rowData.userName + "<br>" +
+                                "Phone: " + rowData.userPhon
+                            );
+                            $("#detail").dialog({
+                                title: "사업자정보상세",
+                                modal: true,
+                                buttons: {
+                                    Ok: function() {
+                                        $(this).dialog("close");
+                                    }
+                                }
+                            });
                     } else if (key === "productDetail") {
-                        alert("Delete Record\n" +
-                            "ID: " + rowData.userId + "\n" +
-                            "Name: " + rowData.userName + "\n" +
-                            "Phone: " + rowData.userPhon);
+                    	$("#detail").html(
+                                "ID: " + rowData.userId + "<br>" +
+                                "Name: " + rowData.userName + "<br>" +
+                                "Phone: " + rowData.userPhon
+                            );
+                            $("#detail").dialog({
+                                title: "제품정보상세",
+                                modal: true,
+                                buttons: {
+                                    Ok: function() {
+                                        $(this).dialog("close");
+                                    }
+                                }
+                            });
                     }
                 },
                 items: {
@@ -153,5 +201,8 @@
     
     <!-- context menu -->
     <div id="pager"></div>
+    
+    <!-- Dialog Modal -->
+    <div id="detail" title="Detail"></div>
 </body>
 </html>

@@ -44,4 +44,26 @@
         SET DEL_YN = #{dormantUser}
         WHERE MBR_SQNO = #{id}
     </update>
+    
+    <select id="getUserDetail" resultType="com.example.demo.dto.UserDTO">
+	    SELECT 
+	        MBR_SQNO as mbrSqno, 
+	        MBR_NO as mbrNo, 
+	        MBR_NM as mbrNm, 
+	        MBR_USER_ID as mbrUserId, 
+	        MBR_USER_PWD as mbrUserPwd, 
+	        MBR_TEL as mbrTel, 
+	        MBR_PHONE as mbrPhone, 
+	        MBR_ADDR as mbrAddr, 
+	        BZPP_ORDER_NO as bzppOrderNo, 
+	        SITE_SQNO as siteSqno, 
+	        LST_LGN_DATE as lstLgnDate, 
+	        UPDATE_DATE as updateDate, 
+	        DEL_YN as delYn
+	    FROM 
+	        TBAXMM003
+	    WHERE 
+	        MBR_USER_ID = #{userId}
+	</select>
+
 </mapper>
