@@ -1,126 +1,197 @@
-;(function($){
 /**
- * jqGrid Icelandic Translation
+ * @license jqGrid Icelandic Translation
  * jtm@hi.is Univercity of Iceland
  * Dual licensed under the MIT and GPL licenses:
  * http://www.opensource.org/licenses/mit-license.php
  * http://www.gnu.org/licenses/gpl.html
 **/
-$.jgrid = {
-	defaults : {
-		recordtext: "View {0} - {1} of {2}",
-	    emptyrecords: "No records to view",
+
+/*jslint white: true */
+/*global jQuery, module, require */
+(function (factory) {
+	"use strict";
+	if (typeof define === "function" && define.amd) {
+		// AMD. Register as an anonymous module.
+		define(["jquery"], factory);
+	} else if (typeof module === "object" && module.exports) {
+		// Node/CommonJS
+		module.exports = function (root, $) {
+			if ($ === undefined) {
+				// require("jquery") returns a factory that requires window to
+				// build a jQuery instance, we normalize how we use modules
+				// that require this pattern but the window provided is a noop
+				// if it's defined (how jquery works)
+				$ = typeof window !== "undefined" ?
+						require("jquery") :
+						require("jquery")(root || window);
+			}
+			factory($);
+			return $;
+		};
+	} else {
+		// Browser globals
+		factory(jQuery);
+	}
+}(function ($) {
+"use strict";
+var locInfo = {
+	isRTL: false,
+	defaults: {
+		recordtext: "Skoða {0} - {1} af {2}",
+		emptyrecords: "Engar færslur",
 		loadtext: "Hleður...",
-		pgtext : "Page {0} of {1}"
+		pgtext: "Síða {0} af {1}",
+		pgfirst: "First Page",
+		pglast: "Last Page",
+		pgnext: "Next Page",
+		pgprev: "Previous Page",
+		pgrecs: "Records per Page",
+		showhide: "Toggle Expand Collapse Grid",
+		savetext: "Vistar..."
 	},
-	search : {
-	    caption: "Leita...",
-	    Find: "Leita",
-	    Reset: "Endursetja",
-	    odata : ['equal', 'not equal', 'less', 'less or equal','greater','greater or equal', 'begins with','does not begin with','is in','is not in','ends with','does not end with','contains','does not contain'],
-	    groupOps: [	{ op: "AND", text: "all" },	{ op: "OR",  text: "any" }	],
-		matchText: " match",
-		rulesText: " rules"
+	search: {
+		caption: "Leita...",
+		Find: "Leita",
+		Reset: "Endursetja",
+		odata: [
+			{ oper: "eq", text: "sama og" },
+			{ oper: "ne", text: "ekki sama og" },
+			{ oper: "lt", text: "minna en" },
+			{ oper: "le", text: "minna eða jafnt og" },
+			{ oper: "gt", text: "stærra en" },
+			{ oper: "ge", text: "stærra eða jafnt og" },
+			{ oper: "bw", text: "byrjar á" },
+			{ oper: "bn", text: "byrjar ekki á" },
+			{ oper: "in", text: "er í" },
+			{ oper: "ni", text: "er ekki í" },
+			{ oper: "ew", text: "endar á" },
+			{ oper: "en", text: "endar ekki á" },
+			{ oper: "cn", text: "inniheldur" },
+			{ oper: "nc", text: "inniheldur ekki" },
+			{ oper: "nu", text: "is null" },
+			{ oper: "nn", text: "is not null" }
+		],
+		groupOps: [
+			{ op: "AND", text: "allt" },
+			{ op: "OR",  text: "eða" }
+		],
+		addGroupTitle: "Add subgroup",
+		deleteGroupTitle: "Delete group",
+		addRuleTitle: "Add rule",
+		deleteRuleTitle: "Delete rule",
+		operandTitle: "Click to select search operation.",
+		resetTitle: "Reset Search Value"
 	},
-	edit : {
-	    addCaption: "Add Record",
-	    editCaption: "Edit Record",
-	    bSubmit: "Vista",
-	    bCancel: "Hætta við",
+	edit: {
+		addCaption: "Bæta við færslu",
+		editCaption: "Breyta færslu",
+		bSubmit: "Vista",
+		bCancel: "Hætta við",
 		bClose: "Loka",
-		saveData: "Data has been changed! Save changes?",
-		bYes : "Yes",
-		bNo : "No",
-		bExit : "Cancel",
-	    msg: {
-	        required:"Reitur er nauðsynlegur",
-	        number:"Vinsamlega settu inn tölu",
-	        minValue:"gildi verður að vera meira en eða jafnt og ",
-	        maxValue:"gildi verður að vera minna en eða jafnt og ",
-	        email: "er ekki löglegt email",
-	        integer: "Vinsamlega settu inn tölu",
-			date: "Please, enter valid date value",
-			url: "is not a valid URL. Prefix required ('http://' or 'https://')",
-			nodefined : " is not defined!",
-			novalue : " return value is required!",
-			customarray : "Custom function should return array!",
-			customfcheck : "Custom function should be present in case of custom checking!"
+		saveData: "Gögn hafa breyst! Vista breytingar?",
+		bYes: "Já",
+		bNo: "Nei",
+		bExit: "Hætta við",
+		msg: {
+			required: "Reitur er nauðsynlegur",
+			number: "Vinsamlega settu inn tölu",
+			minValue: "gildi verður að vera meira en eða jafnt og ",
+			maxValue: "gildi verður að vera minna en eða jafnt og ",
+			email: "er ekki löglegt email",
+			integer: "Vinsamlega settu inn tölu",
+			date: "Vinsamlega setti inn dagsetningu",
+			url: "er ekki löglegt URL. Vantar ('http://' eða 'https://')",
+			nodefined: " er ekki skilgreint!",
+			novalue: " skilagildi nauðsynlegt!",
+			customarray: "Fall skal skila fylki!",
+			customfcheck: "Fall skal vera skilgreint!"
 		}
 	},
-	view : {
-	    caption: "View Record",
-	    bClose: "Close"
+	view: {
+		caption: "Skoða færslu",
+		bClose: "Loka"
 	},
-	del : {
-	    caption: "Eyða",
-	    msg: "Eyða völdum færslum ?",
-	    bSubmit: "Eyða",
-	    bCancel: "Hætta við"
+	del: {
+		caption: "Eyða",
+		msg: "Eyða völdum færslum ?",
+		bSubmit: "Eyða",
+		bCancel: "Hætta við"
 	},
-	nav : {
-		edittext: " ",
-	    edittitle: "Breyta færslu",
-		addtext:" ",
-	    addtitle: "Ný færsla",
-	    deltext: " ",
-	    deltitle: "Eyða færslu",
-	    searchtext: " ",
-	    searchtitle: "Leita",
-	    refreshtext: "",
-	    refreshtitle: "Endurhlaða",
-	    alertcap: "Viðvörun",
-	    alerttext: "Vinsamlega veldu færslu",
+	nav: {
+		edittext: "",
+		edittitle: "Breyta færslu",
+		addtext: "",
+		addtitle: "Ný færsla",
+		deltext: "",
+		deltitle: "Eyða færslu",
+		searchtext: "",
+		searchtitle: "Leita",
+		refreshtext: "",
+		refreshtitle: "Endurhlaða",
+		alertcap: "Viðvörun",
+		alerttext: "Vinsamlega veldu færslu",
 		viewtext: "",
-		viewtitle: "View selected row"
+		viewtitle: "Skoða valda færslu",
+		savetext: "",
+		savetitle: "Save row",
+		canceltext: "",
+		canceltitle: "Cancel row editing"
 	},
-	col : {
-	    caption: "Sýna / fela dálka",
-	    bSubmit: "Vista",
-	    bCancel: "Hætta við"	
+	col: {
+		caption: "Sýna / fela dálka",
+		bSubmit: "Vista",
+		bCancel: "Hætta við"
 	},
-	errors : {
-		errcap : "Villa",
-		nourl : "Vantar slóð",
+	errors: {
+		errcap: "Villa",
+		nourl: "Vantar slóð",
 		norecords: "Engar færslur valdar",
-	    model : "Length of colNames <> colModel!"
+		model: "Lengd colNames <> colModel!"
 	},
-	formatter : {
-		integer : {thousandsSeparator: " ", defaultValue: '0'},
-		number : {decimalSeparator:".", thousandsSeparator: " ", decimalPlaces: 2, defaultValue: '0.00'},
-		currency : {decimalSeparator:".", thousandsSeparator: " ", decimalPlaces: 2, prefix: "", suffix:"", defaultValue: '0.00'},
-		date : {
+	formatter: {
+		integer: { thousandsSeparator: " ", defaultValue: "0" },
+		number: { decimalSeparator: ".", thousandsSeparator: " ", decimalPlaces: 2, defaultValue: "0.00" },
+		currency: { decimalSeparator: ".", thousandsSeparator: " ", decimalPlaces: 2, prefix: "", suffix: "", defaultValue: "0.00" },
+		date: {
 			dayNames:   [
-				"Sun", "Mon", "Tue", "Wed", "Thr", "Fri", "Sat",
-				"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
+				"Sun", "Mán", "Þri", "Mið", "Fim", "Fös", "Lau",
+				"Sunnudagur", "Mánudagur", "Þriðjudagur", "Miðvikudagur", "Fimmtudagur", "Föstudagur", "Laugardagur"
 			],
 			monthNames: [
-				"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
-				"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
+				"Jan", "Feb", "Mar", "Apr", "Maí", "Jún", "Júl", "Ágú", "Sep", "Oct", "Nóv", "Des",
+				"Janúar", "Febrúar", "Mars", "Apríl", "Maí", "Júný", "Júlý", "Ágúst", "September", "Október", "Nóvember", "Desember"
 			],
-			AmPm : ["am","pm","AM","PM"],
-			S: function (j) {return j < 11 || j > 13 ? ['st', 'nd', 'rd', 'th'][Math.min((j - 1) % 10, 3)] : 'th'},
-			srcformat: 'Y-m-d',
-			newformat: 'd/m/Y',
-			masks : {
-	            ISO8601Long:"Y-m-d H:i:s",
-	            ISO8601Short:"Y-m-d",
-	            ShortDate: "n/j/Y",
-	            LongDate: "l, F d, Y",
-	            FullDateTime: "l, F d, Y g:i:s A",
-	            MonthDay: "F d",
-	            ShortTime: "g:i A",
-	            LongTime: "g:i:s A",
-	            SortableDateTime: "Y-m-d\\TH:i:s",
-	            UniversalSortableDateTime: "Y-m-d H:i:sO",
-	            YearMonth: "F, Y"
-	        },
-	        reformatAfterEdit : false
-		},
-		baseLinkUrl: '',
-		showAction: '',
-	    target: '',
-	    checkbox : {disabled:true},
-		idName : 'id'
+			AmPm: ["am", "pm", "AM", "PM"],
+			S: function (j) {
+				return j < 11 || j > 13 ? ["st", "nd", "rd", "th"][Math.min((j - 1) % 10, 3)] : "th";
+			},
+			srcformat: "Y-m-d",
+			newformat: "d/m/Y",
+			masks: {
+				ShortDate: "n/j/Y",
+				LongDate: "l, F d, Y",
+				FullDateTime: "l, F d, Y g:i:s A",
+				MonthDay: "F d",
+				ShortTime: "g:i A",
+				LongTime: "g:i:s A",
+				YearMonth: "F, Y"
+			}
+		}
 	}
 };
-})(jQuery);
+$.jgrid = $.jgrid || {};
+$.extend(true, $.jgrid, {
+	defaults: {
+		locale: "is"
+	},
+	locales: {
+		// In general the property name is free, but it's recommended to use the names based on
+		// http://www.iana.org/assignments/language-subtag-registry/language-subtag-registry
+		// http://rishida.net/utils/subtags/ and RFC 5646. See Appendix A of RFC 5646 for examples.
+		// One can use the lang attribute to specify language tags in HTML, and the xml:lang attribute for XML
+		// if it exists. See http://www.w3.org/International/articles/language-tags/#extlang
+		is: $.extend({}, locInfo, { name: "íslenska", nameEnglish: "Icelandic" }),
+		"is-IS": $.extend({}, locInfo, { name: "íslenska (Ísland)", nameEnglish: "Icelandic (Iceland)" })
+	}
+});
+}));

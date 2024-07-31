@@ -7,23 +7,21 @@
     
     <link rel="stylesheet" type="text/css" media="screen" href="/css/jquery-ui.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="/css/ui.jqgrid.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/jquery.contextMenu.css">
-    <script src="/js/jquery-1.4.2.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/jquery.contextMenu.min.css">
+    <script src="/js/jquery-3.7.1.min.js" type="text/javascript"></script>
     <script src="/js/jquery-ui.min.js" type="text/javascript"></script>
-    <script src="/js/jquery.jqGrid.min.js" type="text/javascript"></script>
-    <script src="/js/jquery.contextMenu.js" type="text/javascript"></script>
-    
+    <script src="/js/jquery.jqgrid.min.js" type="text/javascript"></script>
+    <script src="/js/jquery.contextMenu.min.js" type="text/javascript"></script>
     
     <script>
-        
-		$(function(){
-        	
-        	// 연락처 하이픈
-        	function formatPhoneNumber(phoneNumber) {
+        $(function(){
+            // 연락처 하이픈
+            function formatPhoneNumber(phoneNumber) {
                 if (!phoneNumber) return '';
                 return phoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
             }
-        	
+
+            // jqGrid 초기화
             $("#list").jqGrid({
                 url: '/api/data',  // 데이터를 가져올 서버 엔드포인트
                 datatype: "json",  // 데이터 타입 설정
@@ -61,9 +59,8 @@
                 viewrecords: true,  // 레코드 수를 보여줄지 여부
                 gridview: true,  // 향상된 성능을 위한 설정
                 autoencode: true,  // XSS 방지를 위한 설정
-                editurl: 'http://localhost:8080/api/updateDormantUser'  // 데이터를 업데이트할 서버 엔드포인트
+                editurl: '/api/updateDormantUser'  // 데이터를 업데이트할 서버 엔드포인트
             });
-            
 
             // 검색 버튼 클릭 이벤트
             $("#searchButton").click(function(){
@@ -99,45 +96,43 @@
 
     			// 검색 조건이 하나라도 있으면 URL 생성, 없으면 alert
     			if (userName || orderNo || companyName || prodName) {
-	                var url = 'http://localhost:8080/api/data?userName=' + userName + '&orderNo=' + orderNo + '&companyName=' + companyName + '&prodName=' + prodName;
+	                var url = '/api/data?userName=' + userName + '&orderNo=' + orderNo + '&companyName=' + companyName + '&prodName=' + prodName;
 	                $("#list").jqGrid('setGridParam', {url: url, datatype: 'json'}).trigger('reloadGrid');
     			} else {
     				alert('최소 하나의 검색 조건을 입력해주세요.');
     			}
             });
-            
-            
-         	// Context Menu 설정
+
+            // Context Menu 설정
             $.contextMenu({
-                selector: '#grid tr.jqgrow',
+                selector: '#list tr.jqgrow',
                 callback: function(key, options) {
                     var rowId = $(this).attr("id");
-                    var rowData = $("#grid").jqGrid('getRowData', rowId);
-                    if (key === "view") {
+                    var rowData = $("#list").jqGrid('getRowData', rowId);
+                    if (key === "userDetail") {
                         alert("View Record\n" +
-                            "ID: " + rowData.id + "\n" +
-                            "Name: " + rowData.name + "\n" +
-                            "Phone: " + rowData.phone);
-                    } else if (key === "edit") {
+                            "ID: " + rowData.userId + "\n" +
+                            "Name: " + rowData.userName + "\n" +
+                            "Phone: " + rowData.userPhon);
+                    } else if (key === "companyDetail") {
                         alert("Edit Record\n" +
-                            "ID: " + rowData.id + "\n" +
-                            "Name: " + rowData.name + "\n" +
-                            "Phone: " + rowData.phone);
-                    } else if (key === "delete") {
+                            "ID: " + rowData.userId + "\n" +
+                            "Name: " + rowData.userName + "\n" +
+                            "Phone: " + rowData.userPhon);
+                    } else if (key === "productDetail") {
                         alert("Delete Record\n" +
-                            "ID: " + rowData.id + "\n" +
-                            "Name: " + rowData.name + "\n" +
-                            "Phone: " + rowData.phone);
+                            "ID: " + rowData.userId + "\n" +
+                            "Name: " + rowData.userName + "\n" +
+                            "Phone: " + rowData.userPhon);
                     }
                 },
                 items: {
-                    "view": {name: "View", icon: "view"},
-                    "edit": {name: "Edit", icon: "edit"},
-                    "delete": {name: "Delete", icon: "delete"}
+                    "userDetail": {name: "회원정보상세"},
+                    "companyDetail": {name: "사업자정보상세"},
+                    "productDetail": {name: "제품정보상세"}
                 }
             });
         });
-        
     </script>
     
 </head>
