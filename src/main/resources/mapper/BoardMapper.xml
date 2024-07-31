@@ -23,20 +23,20 @@
             TBAXPM001 p ON u.MBR_SQNO = p.MBR_SQNO
         JOIN 
             TBAXBM001 b ON s.BZPP_SQNO = b.BZPP_SQNO
-        WHERE
-            1=1
-            <if test="userName != null and userName != ''">
-                AND u.MBR_NM LIKE '%' || #{userName} || '%'
-            </if>
-            <if test="orderNo != null and orderNo != ''">
-                AND u.BZPP_ORDER_NO LIKE '%' || #{orderNo} || '%'
-            </if>
-            <if test="companyName != null and companyName != ''">
-                AND b.BZPP_NM LIKE '%' || #{companyName} || '%'
-            </if>
-            <if test="prodName != null and prodName != ''">
-                AND p.PDT_NM LIKE '%' || #{prodName} || '%'
-            </if>
+        WHERE 1=1
+        AND u.DEL_YN = 'N'
+        <if test="userName neq null and userName neq ''">
+            AND u.MBR_NM LIKE '%' || #{userName} || '%'
+        </if>
+        <if test="orderNo neq null and orderNo neq ''">
+            AND u.BZPP_ORDER_NO LIKE '%' || #{orderNo} || '%'
+        </if>
+        <if test="companyName neq null and companyName neq ''">
+            AND b.BZPP_NM LIKE '%' || #{companyName} || '%'
+        </if>
+        <if test="prodName neq null and prodName neq ''">
+            AND p.PDT_NM LIKE '%' || #{prodName} || '%'
+        </if>
     </select>
 
     <update id="updateDormantUser">
