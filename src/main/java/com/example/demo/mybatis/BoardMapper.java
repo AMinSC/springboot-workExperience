@@ -2,6 +2,7 @@ package com.example.demo.mybatis;
 
 import com.example.demo.dto.BoardDTO;
 import com.example.demo.dto.CompanyDTO;
+import com.example.demo.dto.ProductDTO;
 import com.example.demo.dto.UserDTO;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -21,4 +22,6 @@ public interface BoardMapper {
     UserDTO getUserDetail(String mbrSqno);
     
 	CompanyDTO getCompanyDetail(String bzppOrderNo);
+	
+	ProductDTO getProductDetail(String pdtSqno);
 }

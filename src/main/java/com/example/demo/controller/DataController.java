@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.BoardDTO;
 import com.example.demo.dto.CompanyDTO;
+import com.example.demo.dto.ProductDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,5 +53,12 @@ public class DataController {
     	String bzppOrderNo = request.get("bzppOrderNo");
     	CompanyDTO companyDetail = boardService.getCompanyDetail(bzppOrderNo);
     	return ResponseEntity.ok(companyDetail);
+    }
+    
+    @PostMapping("/productDetail")
+    public ResponseEntity<ProductDTO> getProductDetail(@RequestBody Map<String, String> request) {
+    	String pdtSqno = request.get("pdtSqno");
+    	ProductDTO productDetail = boardService.getProductDetail(pdtSqno);
+    	return ResponseEntity.ok(productDetail);
     }
 }

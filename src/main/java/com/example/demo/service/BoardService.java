@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dto.BoardDTO;
 import com.example.demo.dto.CompanyDTO;
+import com.example.demo.dto.ProductDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.mybatis.BoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +30,9 @@ public class BoardService {
     
     public CompanyDTO getCompanyDetail(String bzppOrderNo) {
     	return boardMapper.getCompanyDetail(bzppOrderNo);
+    }
+    
+    public ProductDTO getProductDetail(String pdtSqno) {
+    	return boardMapper.getProductDetail(pdtSqno);
     }
 }

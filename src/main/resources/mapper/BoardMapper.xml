@@ -63,9 +63,10 @@
 	        DEL_YN as delYn
 	    FROM 
 	        TBAXMM003
-	    WHERE 
-	        MBR_SQNO = #{mbrSqno}
+	    WHERE 1 = 1
+	    AND MBR_SQNO = #{mbrSqno}
 	</select>
+	
 	
 	<!-- Company Start -->
 	<select id="getCompanyDetail" resultType="com.example.demo.dto.CompanyDTO">
@@ -85,8 +86,35 @@
 	        DEL_YN as delYn
 	    FROM 
 	        TBAXBM001
-	    WHERE 
-	        BZPP_ORDER_NO = #{bzppOrderNo}
+	    WHERE 1 = 1
+	    AND BZPP_ORDER_NO = #{bzppOrderNo}
+	</select>
+	
+	
+	<!-- Company Start -->
+	<select id="getProductDetail" resultType="com.example.demo.dto.ProductDTO">
+	    SELECT 
+	        p.PDT_SQNO as pdtSqno,
+		    p.BZPP_SQNO as bzppSqno,
+		    p.MBR_SQNO as mbrSqno,
+		    p.PDT_NM as pdtNm,		
+		    p.PDT_NO as pdtNo,		
+		    p.PDT_STAT_CD as pdtStatCd,		
+		    p.DLVY_STAT_CD as dlvyStatCd,
+    		p.DEL_YN as delYn,
+    		b.BZPP_USER_ID as bzppUserId,
+    		b.BZPP_PHONE as bzppPhon,
+    		b.BZPP_ORDER_NO as bzppOrderNo,
+    		b.BZPP_ADDR as bzppAddr,
+    		b.BZPP_NO as bzppNo,
+    		b.BZPP_TEL as bzppTel
+	    FROM 
+	        TBAXPM001 p,
+	        TBAXBM001 b
+	    WHERE 1 = 1
+	    AND p.PDT_SQNO = #{pdtSqno}
+	    AND p.BZPP_SQNO = b.BZPP_SQNO
+	    
 	</select>
 
 </mapper>

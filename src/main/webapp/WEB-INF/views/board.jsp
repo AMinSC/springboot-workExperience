@@ -141,7 +141,7 @@
                             );
                             
                             $("#detail").dialog({
-                                title: "회원정보상세",
+                                title: "회원정보 상세 및 수정",
                                 modal: true,
                                 buttons: {
                                     "수정": function() {
@@ -193,7 +193,7 @@
                             );
                             
                             $("#detail").dialog({
-                                title: "사업자정보상세",
+                                title: "사업자정보 상세 및 수정",
                                 modal: true,
                                 buttons: {
                                     "수정": function() {
@@ -227,20 +227,58 @@
                             
                     	});
                     } else if (key === "productDetail") {
-                    	$("#detail").html(
-                                "ID: " + rowData.userId + "<br>" +
-                                "Name: " + rowData.userName + "<br>" +
-                                "Phone: " + rowData.userPhon
+                    	$.ajax({
+                            url: '/api/productDetail',
+                            method: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({ pdtSqno: rowData.pdtSqno }),
+                            success: function(data) {
+                            	console.log(data)
+                    			$("#detail").html(
+                                "<div>제품명: <span class='view-mode'>" + data.pdtNm + "</span><input class='edit-mode' type='text' value='" + data.pdtNm + "' style='display:none;'></div>" +
+                                "<div>사업자ID: <span class='view-mode'>" + data.bzppUserId + "</span><input class='edit-mode' type='text' value='" + data.bzppUserId + "' style='display:none;'></div>" +
+                                "<div>사업자폰: <span class='view-mode'>" + formatPhoneNumber(data.bzppPhone) + "</span><input class='edit-mode' type='text' value='" + formatPhoneNumber(data.bzppPhone) + "' style='display:none;'></div>" +
+                                "<div>주문번호: <span class='view-mode'>" + data.bzppOrderNo + "</span><input class='edit-mode' type='text' value='" + data.bzppOrderNo + "' style='display:none;' readonly></div>" +
+                                "<div>주소: <span class='view-mode'>" + data.bzppAddr + "</span><input class='edit-mode' type='text' value='" + data.bzppAddr + "' style='display:none;'></div>" +
+                                "<div>사업자번호: <span class='view-mode'>" + data.bzppNo + "</span><span class='edit-mode' style='display:none;'>" + data.bzppNo + "</span></div>" +
+                                "<div>사업자전화: <span class='view-mode'>" + formatPhoneNumber(data.bzppTel) + "</span><input class='edit-mode' type='text' value='" + formatPhoneNumber(data.bzppTel) + "' style='display:none;'></div>" +
+                                "<div>탈퇴여부: <span class='view-mode'>" + data.delYn + "</span><input class='edit-mode' type='text' value='" + data.delYn + "' style='display:none;'></div>"
                             );
+                            
                             $("#detail").dialog({
-                                title: "제품정보상세",
+                                title: "사업자정보 상세 및 수정",
                                 modal: true,
                                 buttons: {
-                                    Ok: function() {
+                                    "수정": function() {
+                                        $(".view-mode").hide();
+                                        $(".edit-mode").show();
+                                    },
+                                    "저장": function() {
+                                        // Save the changes
+                                        // Implement your save logic here
+                                        var updatedData = {
+                                        		pdtNm: $(".edit-mode").eq(0).val(),
+                                        		bzppUserId: $(".edit-mode").eq(1).val(),
+                                        		bzppPhone: $(".edit-mode").eq(2).val(),
+                                        		bzppOrderNo: $(".edit-mode").eq(3).val(),
+                                        		bzppAddr: $(".edit-mode").eq(4).val(),
+                                        		bzppNo: data.bzppNo,
+                                        		bzppTel: $(".edit-mode").eq(6).val(),
+                                        		delYn: $(".edit-mode").eq(7).val()
+                                        };
+                                        console.log(updatedData);
+                                        // Optionally, send updated data to the server
+                                        // $.ajax({...});
+                                        $(this).dialog("close");
+                                    },
+                                    "취소": function() {
                                         $(this).dialog("close");
                                     }
                                 }
                             });
+                            }
+                            
+                    	});
                     }
                 },
                 items: {
