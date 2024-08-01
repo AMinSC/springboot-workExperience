@@ -1,6 +1,7 @@
 package com.example.demo.mybatis;
 
 import com.example.demo.dto.BoardDTO;
+import com.example.demo.dto.CompanyDTO;
 import com.example.demo.dto.UserDTO;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -10,12 +11,14 @@ import java.util.List;
 
 @Mapper
 public interface BoardMapper {
-    List<BoardDTO> searchData(@Param("userName") String userName, 
-                              @Param("orderNo") String orderNo, 
-                              @Param("companyName") String companyName, 
-                              @Param("prodName") String prodName);
+    List<BoardDTO> searchData(@Param("mbrNm") String mbrNm, 
+                              @Param("bzppOrderNo") String bzppOrderNo, 
+                              @Param("bzppNm") String bzppNm, 
+                              @Param("pdtNm") String pdtNm);
     
     void updateDormantUser(@Param("id") String id, @Param("dormantUser") String dormantUser);
     
-    UserDTO getUserDetail(String userId);
+    UserDTO getUserDetail(String mbrSqno);
+    
+	CompanyDTO getCompanyDetail(String bzppOrderNo);
 }

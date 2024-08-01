@@ -2,76 +2,99 @@ package com.example.demo.dto;
 
 public class BoardDTO {
 
-	private String userName;
-	private String userId;
-	private String userPhon;
-	private String orderNo;
-	private String prodNo;
-	private String prodName;
-	private String companyName;
-	private String companyPhon;
-	private String companyAddr;
-	private String dormantUser;
+	private String mbrNm;
+	private String mbrUserId;
+	private String mbrPhone;
+	private String bzppOrderNo;
+	private String pdtNo;
+	private String pdtNm;
+	private String bzppNm;
+	private String bzppPhone;
+	private String bzppAddr;
+	private String delYn;
+	private String mbrSqno;
+	private String bzppSqno;
+	private String pdtSqno;
+
 
 	// Getters and setters
-    public String getUserName() {
-        return userName;
-    }
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-    public String getUserId() {
-        return userId;
-    }
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-    public String getUserPhon() {
-        return userPhon;
-    }
-    public void setUserPhon(String userPhon) {
-        this.userPhon = userPhon;
-    }
-    public String getOrderNo() {
-        return orderNo;
-    }
-    public void setOrderNo(String orderNo) {
-        this.orderNo = orderNo;
-    }
-    public String getProdNo() {
-        return prodNo;
-    }
-    public void setProdNo(String prodNo) {
-        this.prodNo = prodNo;
-    }
-    public String getProdName() {
-        return prodName;
-    }
-    public void setProdName(String prodName) {
-        this.prodName = prodName;
-    }
-    public String getCompanyName() {
-        return companyName;
-    }
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-    public String getCompanyPhon() {
-        return companyPhon;
-    }
-    public void setCompanyPhon(String companyPhon) {
-        this.companyPhon = companyPhon;
-    }
-    public String getCompanyAddr() {
-        return companyAddr;
-    }
-    public void setCompanyAddr(String companyAddr) {
-        this.companyAddr = companyAddr;
-    }
-    public String getDormantUser() {
-        return dormantUser;
-    }
-    public void setDormantUser(String dormantUser) {
-        this.dormantUser = dormantUser;
-    }
+	public String getMbrNm() {
+		return mbrNm;
+	}
+	public void setMbrNm(String mbrNm) {
+		this.mbrNm = mbrNm;
+	}
+	public String getMbrUserId() {
+		return mbrUserId;
+	}
+	public void setMbrUserId(String mbrUserId) {
+		this.mbrUserId = mbrUserId;
+	}
+	public String getMbrPhone() {
+		return mbrPhone;
+	}
+	public void setMbrPhone(String mbrPhone) {
+		this.mbrPhone = mbrPhone;
+	}
+	public String getBzppOrderNo() {
+		return bzppOrderNo;
+	}
+	public void setBzppOrderNo(String bzppOrderNo) {
+		this.bzppOrderNo = bzppOrderNo;
+	}
+	public String getPdtNo() {
+		return pdtNo;
+	}
+	public void setPdtNo(String pdtNo) {
+		this.pdtNo = pdtNo;
+	}
+	public String getPdtNm() {
+		return pdtNm;
+	}
+	public void setPdtNm(String pdtNm) {
+		this.pdtNm = pdtNm;
+	}
+	public String getBzppNm() {
+		return bzppNm;
+	}
+	public void setBzppNm(String bzppNm) {
+		this.bzppNm = bzppNm;
+	}
+	public String getBzppPhone() {
+		return bzppPhone;
+	}
+	public void setBzppPhone(String bzppPhone) {
+		this.bzppPhone = bzppPhone;
+	}
+	public String getBzppAddr() {
+		return bzppAddr;
+	}
+	public void setBzppAddr(String bzppAddr) {
+		this.bzppAddr = bzppAddr;
+	}
+	public String getDelYn() {
+		return delYn;
+	}
+	public void setDelYn(String delYn) {
+		this.delYn = delYn;
+	}
+	public String getMbrSqno() {
+		return mbrSqno;
+	}
+	public void setMbrSqno(String mbrSqno) {
+		this.mbrSqno = mbrSqno;
+	}
+	public String getBzppSqno() {
+		return bzppSqno;
+	}
+	public void setBzppSqno(String bzppSqno) {
+		this.bzppSqno = bzppSqno;
+	}
+	public String getPdtSqno() {
+		return pdtSqno;
+	}
+	public void setPdtSqno(String pdtSqno) {
+		this.pdtSqno = pdtSqno;
+	}
+    
 }

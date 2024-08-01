@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.BoardDTO;
+import com.example.demo.dto.CompanyDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +25,12 @@ public class DataController {
 
     @GetMapping("/data")
     public List<BoardDTO> getData(
-        @RequestParam(value = "userName", required = false) String userName,
-        @RequestParam(value = "orderNo", required = false) String orderNo,
-        @RequestParam(value = "companyName", required = false) String companyName,
-        @RequestParam(value = "prodName", required = false) String prodName) {
+        @RequestParam(value = "mbrNm", required = false) String mbrNm,
+        @RequestParam(value = "bzppOrderNo", required = false) String bzppOrderNo,
+        @RequestParam(value = "bzppNm", required = false) String bzppNm,
+        @RequestParam(value = "pdtNm", required = false) String pdtNm) {
 
-        return boardService.searchData(userName, orderNo, companyName, prodName);
+        return boardService.searchData(mbrNm, bzppOrderNo, bzppNm, pdtNm);
     }
     
     @PostMapping("/updateDormantUser")
@@ -39,10 +40,17 @@ public class DataController {
     
     @PostMapping("/userDetail")
     public ResponseEntity<UserDTO> getUserDetail(@RequestBody Map<String, String> request) {
-    	String userId = request.get("userId");
-    	System.out.println("Received userId: " + userId); // 로그 추가
-    	UserDTO userDetail = boardService.getUserDetail(userId);
+    	String mbrSqno = request.get("mbrSqno");
+    	System.out.println("Received mbrSqno: " + mbrSqno); // 로그 추가
+    	UserDTO userDetail = boardService.getUserDetail(mbrSqno);
     	System.out.println("Returning user detail: " + userDetail); // 로그 추가
     	return ResponseEntity.ok(userDetail);
+    }
+    
+    @PostMapping("/CompanyDetail")
+    public ResponseEntity<CompanyDTO> getCompanyDetail(@RequestBody Map<String, String> request) {
+    	String bzppOrderNo = request.get("bzppOrderNo");
+    	CompanyDTO companyDetail = boardService.getCompanyDetail(bzppOrderNo);
+    	return ResponseEntity.ok(companyDetail);
     }
 }

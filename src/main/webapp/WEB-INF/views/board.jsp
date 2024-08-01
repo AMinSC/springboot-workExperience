@@ -27,18 +27,21 @@
                 url: '/api/data',  // 데이터를 가져올 서버 엔드포인트
                 datatype: "json",  // 데이터 타입 설정
                 cellEdit: true,
-                colNames:['회원명', '회원아이디', '회원폰번호', '주문번호', '제품번호', '제품명', '사업자명', '사업자폰', '사업자주소', '삭제유무'],  // 컬럼명
+                colNames:['회원명', '회원아이디', '회원폰번호', '주문번호', '제품번호', '제품명', '사업자명', '사업자폰', '사업자주소', '삭제유무', '회원일련번호', '제품일련번호', '사업자일련번호'],  // 컬럼명
                 colModel:[        // 컬럼 모델 설정
-                    {name:'userName', index:'userName', align:'center', width:100},
-                    {name:'userId', index:'userId', align:'center', width:100},
-                    {name:'userPhon', index:'userPhon', align:'center', width:100, formatter: function(cellValue) { return formatPhoneNumber(cellValue) }},
-                    {name:'orderNo', index:'orderNo', align:'center', width:100},
-                    {name:'prodNo', index:'prodNo', align:'center', width:100},
-                    {name:'prodName', index:'prodName', align:'center', width:150},
-                    {name:'companyName', index:'companyName', align:'center', width:100},
-                    {name:'companyPhon', index:'companyPhon', align:'center', width:100, formatter: function(cellValue) { return formatPhoneNumber(cellValue)} },
-                    {name:'companyAddr', index:'companyAddr', align:'center', width:150},
-                    {name:'dormantUser', index:'dormantUser', align:'center', width:50, editable: true, edittype: 'select', formatter: 'select', editoptions: {value: {"Y": "Y", "N": "N"}}}
+                    {name:'mbrNm', index:'mbrNm', align:'center', width:100},
+                    {name:'mbrUserId', index:'mbrUserId', align:'center', width:100},
+                    {name:'mbrPhone', index:'mbrPhone', align:'center', width:100, formatter: function(cellValue) { return formatPhoneNumber(cellValue) }},
+                    {name:'bzppOrderNo', index:'bzppOrderNo', align:'center', width:100},
+                    {name:'pdtNo', index:'pdtNo', align:'center', width:100},
+                    {name:'pdtNm', index:'pdtNm', align:'center', width:150},
+                    {name:'bzppNm', index:'bzppNm', align:'center', width:100},
+                    {name:'bzppPhone', index:'bzppPhone', align:'center', width:100, formatter: function(cellValue) { return formatPhoneNumber(cellValue)} },
+                    {name:'bzppAddr', index:'bzppAddr', align:'center', width:150},
+                    {name:'delYn', index:'delYn', align:'center', width:50, editable: true, edittype: 'select', formatter: 'select', editoptions: {value: {"Y": "Y", "N": "N"}}},
+                    {name:'mbrSqno', index:'mbrSqno', align:'center', width:150, hidden: true},
+                    {name:'pdtSqno', index:'pdtSqno', align:'center', width:150, hidden: true},
+                    {name:'bzppSqno', index:'bzppSqno', align:'center', width:150, hidden: true}
                 ],
                 loadtext: "로딩중..",
                 height: 250,      // 그리드 높이
@@ -60,44 +63,53 @@
                 viewrecords: true,  // 레코드 수를 보여줄지 여부
                 gridview: true,  // 향상된 성능을 위한 설정
                 autoencode: true,  // XSS 방지를 위한 설정
-                editurl: '/api/updateDormantUser'  // 데이터를 업데이트할 서버 엔드포인트
+                editurl: '/api/updateDormantUser',  // 데이터를 업데이트할 서버 엔드포인트
+                loadComplete: function() {
+                    var ids = $("#list").jqGrid('getDataIDs');
+                    gridData = {};
+                    for (var i = 0; i < ids.length; i++) {
+                        var rowData = $("#list").jqGrid('getRowData', ids[i]);
+                        gridData[ids[i]] = rowData;
+                    }
+                }
+
             });
 
             // 검색 버튼 클릭 이벤트
             $("#searchButton").click(function(){
-                var userName = $("#userName").val().trim();
-                var orderNo = $("#orderNo").val().trim();
-                var companyName = $("#companyName").val().trim();
-                var prodName = $("#prodName").val().trim();
+                var mbrNm = $("#mbrNm").val().trim();
+                var bzppOrderNo = $("#bzppOrderNo").val().trim();
+                var bzppNm = $("#bzppNm").val().trim();
+                var pdtNm = $("#pdtNm").val().trim();
                 
                 // 유효성 검사
                 const regexKorean = /^[ㄱ-ㅎ|가-힣|]+$/;
     			const regexNonKorean = /^[a-z|A-Z|0-9|]+$/;
 
-    			if (userName && !regexKorean.test(userName)) {
+    			if (mbrNm && !regexKorean.test(mbrNm)) {
     				alert('회원명에는 한글만 입력할 수 있습니다.');
-    				$("#userName").focus();
+    				$("#mbrNm").focus();
     				return false;
     			}
-    			if (orderNo && !regexNonKorean.test(orderNo)) {
+    			if (bzppOrderNo && !regexNonKorean.test(bzppOrderNo)) {
     				alert('주문번호에는 영문 및 숫자만 입력할 수 있습니다.');
-    				$("#orderNo").focus();
+    				$("#bzppOrderNo").focus();
     				return false;
     			}
-    			if (companyName && !regexNonKorean.test(companyName)) {
+    			if (bzppNm && !regexNonKorean.test(bzppNm)) {
     				alert('사업자명에는 영문 및 숫자만 입력할 수 있습니다.');
-    				$("#companyName").focus();
+    				$("#bzppNm").focus();
     				return false;
     			}
-    			if (prodName && !regexNonKorean.test(prodName)) {
+    			if (pdtNm && !regexNonKorean.test(pdtNm)) {
     				alert('제품명에는 영문 및 숫자만 입력할 수 있습니다.');
-    				$("#prodName").focus();
+    				$("#pdtNm").focus();
     				return false;
     			}
 
     			// 검색 조건이 하나라도 있으면 URL 생성, 없으면 alert
-    			if (userName || orderNo || companyName || prodName) {
-	                var url = '/api/data?userName=' + userName + '&orderNo=' + orderNo + '&companyName=' + companyName + '&prodName=' + prodName;
+    			if (mbrNm || bzppOrderNo || bzppNm || pdtNm) {
+	                var url = '/api/data?mbrNm=' + mbrNm + '&bzppOrderNo=' + bzppOrderNo + '&bzppNm=' + bzppNm + '&pdtNm=' + pdtNm;
 	                $("#list").jqGrid('setGridParam', {url: url, datatype: 'json'}).trigger('reloadGrid');
     			} else {
     				alert('최소 하나의 검색 조건을 입력해주세요.');
@@ -112,35 +124,55 @@
                     var rowData = $("#list").jqGrid('getRowData', rowId);
                     if (key === "userDetail") {
                     	$.ajax({
-                    		url: '/api/userDetail',
-                    		method: 'POST',
-                    		contentType: 'application/json',
-                    		data: JSON.stringify({ userId: rowData.userId }),
-                    		success: function(data) {
-                    			console.log(data)
+                            url: '/api/userDetail',
+                            method: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({ mbrSqno: rowData.mbrSqno }),
+                            success: function(data) {
                     			$("#detail").html(
-                    					"회원명: " + data.mbrNm + "<br>" +
-                                        "회원아이디: " + data.mbrUserId + "<br>" +
-                                        "회원폰번호: " + formatPhoneNumber(data.mbrPhone) + "<br>" +
-                                        "주문번호: " + data.bzppOrderNo + "<br>" +
-                                        "주소: " + data.mbrAddr + "<br>" +
-                                        "회원번호: " + data.mbrNo + "<br>" +
-                                        "사업자폰: " + formatPhoneNumber(data.mbrTel) + "<br>" +
-                                        "삭제유무: " + data.delYn
-                                        );
-                    			$("#detail").dialog({
-                    				title: "회원정보상세",
-                    				modal: true,
-                    				buttons: {
-                    					Ok: function() {
-                    						$(this).dialog("close");
-                    					}
-                    				}
-                    			});
-                    		},
-                    		error: function(xhr, status, error) {
-                    			alert('Error: ' + error);
-                    		}
+                                "<div>회원명: <span class='view-mode'>" + data.mbrNm + "</span><input class='edit-mode' type='text' value='" + data.mbrNm + "' style='display:none;'></div>" +
+                                "<div>회원아이디: <span class='view-mode'>" + data.mbrUserId + "</span><input class='edit-mode' type='text' value='" + data.mbrUserId + "' style='display:none;'></div>" +
+                                "<div>회원폰번호: <span class='view-mode'>" + formatPhoneNumber(data.mbrPhone) + "</span><input class='edit-mode' type='text' value='" + formatPhoneNumber(data.mbrPhone) + "' style='display:none;'></div>" +
+                                "<div>주문번호: <span class='view-mode'>" + data.bzppOrderNo + "</span><input class='edit-mode' type='text' value='" + data.bzppOrderNo + "' style='display:none;' readonly></div>" +
+                                "<div>주소: <span class='view-mode'>" + data.mbrAddr + "</span><input class='edit-mode' type='text' value='" + data.mbrAddr + "' style='display:none;'></div>" +
+                                "<div>회원번호: <span class='view-mode'>" + data.mbrNo + "</span><span class='edit-mode' style='display:none;'>" + data.mbrNo + "</span></div>" +
+                                "<div>회원전화: <span class='view-mode'>" + formatPhoneNumber(data.mbrTel) + "</span><input class='edit-mode' type='text' value='" + formatPhoneNumber(data.mbrTel) + "' style='display:none;'></div>" +
+                                "<div>탈퇴여부: <span class='view-mode'>" + data.delYn + "</span><input class='edit-mode' type='text' value='" + data.delYn + "' style='display:none;'></div>"
+                            );
+                            
+                            $("#detail").dialog({
+                                title: "회원정보상세",
+                                modal: true,
+                                buttons: {
+                                    "수정": function() {
+                                        $(".view-mode").hide();
+                                        $(".edit-mode").show();
+                                    },
+                                    "저장": function() {
+                                        // Save the changes
+                                        // Implement your save logic here
+                                        var updatedData = {
+                                        		mbrNm: $(".edit-mode").eq(0).val(),
+                                        		mbrUserId: $(".edit-mode").eq(1).val(),
+                                        		mbrPhone: $(".edit-mode").eq(2).val(),
+                                        		bzppOrderNo: $(".edit-mode").eq(3).val(),
+                                        		mbrAddr: $(".edit-mode").eq(4).val(),
+                                        		mbrNo: data.mbrNo,
+                                        		mbrTel: $(".edit-mode").eq(6).val(),
+                                        		delYn: $(".edit-mode").eq(7).val()
+                                        };
+                                        console.log(updatedData);
+                                        // Optionally, send updated data to the server
+                                        // $.ajax({...});
+                                        $(this).dialog("close");
+                                    },
+                                    "취소": function() {
+                                        $(this).dialog("close");
+                                    }
+                                }
+                            });
+                            }
+                            
                     	});
                     } else if (key === "companyDetail") {
                     	$("#detail").html(
@@ -186,14 +218,14 @@
 </head>
 <body>
     <div>
-        <label for="userName">회원명: </label>
-        <input type="text" id="userName" name="userName">
-        <label for="orderNo">주문번호: </label>
-        <input type="text" id="orderNo" name="orderNo">
-        <label for="companyName">사업자명: </label>
-        <input type="text" id="companyName" name="companyName">
-        <label for="prodName">제품명: </label>
-        <input type="text" id="prodName" name="prodName">
+        <label for="mbrNm">회원명: </label>
+        <input type="text" id="mbrNm" name="mbrNm">
+        <label for="bzppOrderNo">주문번호: </label>
+        <input type="text" id="bzppOrderNo" name="bzppOrderNo">
+        <label for="bzppNm">사업자명: </label>
+        <input type="text" id="bzppNm" name="bzppNm">
+        <label for="pdtNm">제품명: </label>
+        <input type="text" id="pdtNm" name="pdtNm">
         <button id="searchButton">검색</button>
     </div>
     

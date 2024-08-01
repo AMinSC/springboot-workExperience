@@ -5,46 +5,47 @@
 <mapper namespace="com.example.demo.mybatis.BoardMapper">
     <select id="searchData" resultType="com.example.demo.dto.BoardDTO">
         SELECT 
-            u.MBR_NM as userName, 
-            u.MBR_USER_ID as userId, 
-            u.MBR_PHONE as userPhon, 
-            u.BZPP_ORDER_NO as orderNo,
-            p.PDT_NO as prodNo,
-            p.PDT_NM as prodName,
-            b.BZPP_NM as companyName,
-            b.BZPP_PHONE as companyPhon,
-            b.BZPP_ADDR as companyAddr,
-            u.DEL_YN as dormantUser
+            u.MBR_NM as mbrNm, 
+            u.MBR_USER_ID as mbrUserId, 
+            u.MBR_PHONE as mbrPhone, 
+            u.BZPP_ORDER_NO as bzppOrderNo,
+            p.PDT_NO as pdtNo,
+            p.PDT_NM as pdtNm,
+            b.BZPP_NM as bzppNm,
+            b.BZPP_PHONE as bzppPhone,
+            b.BZPP_ADDR as bzppAddr,
+            u.DEL_YN as delYn,
+            u.MBR_SQNO as mbrSqno,
+            b.BZPP_SQNO as bzppSqno,
+            p.PDT_SQNO as pdtSqno
         FROM 
             TBAXMM003 u
-        JOIN 
-            TBAXSM001 s ON u.SITE_SQNO = s.SITE_SQNO
-        JOIN 
-            TBAXPM001 p ON u.MBR_SQNO = p.MBR_SQNO
-        JOIN 
-            TBAXBM001 b ON s.BZPP_SQNO = b.BZPP_SQNO
+            , TBAXBM001 b
+            , TBAXPM001 p
         WHERE 1=1
+        AND p.MBR_SQNO = u.MBR_SQNO
+        AND p.BZPP_SQNO = b.BZPP_SQNO
         AND u.DEL_YN = 'N'
-        <if test="userName neq null and userName neq ''">
-            AND u.MBR_NM LIKE '%' || #{userName} || '%'
+        <if test="mbrNm neq null and mbrNm neq ''">
+            AND u.MBR_NM LIKE '%' || #{mbrNm} || '%'
         </if>
-        <if test="orderNo neq null and orderNo neq ''">
-            AND u.BZPP_ORDER_NO LIKE '%' || #{orderNo} || '%'
+        <if test="bzppOrderNo neq null and bzppOrderNo neq ''">
+            AND u.BZPP_ORDER_NO LIKE '%' || #{bzppOrderNo} || '%'
         </if>
-        <if test="companyName neq null and companyName neq ''">
-            AND b.BZPP_NM LIKE '%' || #{companyName} || '%'
+        <if test="bzppNm neq null and bzppNm neq ''">
+            AND b.BZPP_NM LIKE '%' || #{bzppNm} || '%'
         </if>
-        <if test="prodName neq null and prodName neq ''">
-            AND p.PDT_NM LIKE '%' || #{prodName} || '%'
+        <if test="pdtNm neq null and pdtNm neq ''">
+            AND p.PDT_NM LIKE '%' || #{pdtNm} || '%'
         </if>
     </select>
 
     <update id="updateDormantUser">
         UPDATE TBAXMM003
-        SET DEL_YN = #{dormantUser}
-        WHERE MBR_SQNO = #{id}
+        SET DEL_YN = #{delYn}
+        WHERE MBR_SQNO = #{mbrSqno}
     </update>
-    
+    <!-- User Start -->
     <select id="getUserDetail" resultType="com.example.demo.dto.UserDTO">
 	    SELECT 
 	        MBR_SQNO as mbrSqno, 
@@ -63,7 +64,29 @@
 	    FROM 
 	        TBAXMM003
 	    WHERE 
-	        MBR_USER_ID = #{userId}
+	        MBR_SQNO = #{mbrSqno}
+	</select>
+	
+	<!-- Company Start -->
+	<select id="getCompanyDetail" resultType="com.example.demo.dto.CompanyDTO">
+	    SELECT 
+	        BZPP_SQNO as bzppSqno, 
+	        PDT_SQNO as pdtSqno, 
+	        BZPP_NO as bzppNo, 
+	        BZPP_NM as bzppNm, 
+	        BZPP_USER_ID as bzppUserId, 
+	        BZPP_USER_PWD as bzppUserPwd, 
+	        BZPP_TEL as bzppTel, 
+	        BZPP_PHONE as bzppPhone, 
+	        BZPP_ADDR as bzppAddr, 
+	        BZPP_ORDER_NO as bzppOrderNo, 
+	        UPDATE_DATE as updateDate, 
+	        LST_LGN_DATE as lstLgnDate, 
+	        DEL_YN as delYn
+	    FROM 
+	        TBAXBM001
+	    WHERE 
+	        BZPP_ORDER_NO = #{bzppOrderNo}
 	</select>
 
 </mapper>
