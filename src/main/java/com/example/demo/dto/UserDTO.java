@@ -14,7 +14,7 @@ public class UserDTO {
     private String mbrAddr;          // 회원주소
     private String bzppOrderNo;      // 주문번호
     private String siteSqno;         // 사이트일련번호      FORIGN KEY (TBAXSM001)
-    private Date lstLgnDate;     // 마지막로그인날짜
+    private Date lstLgnDate;     	 // 마지막로그인날짜
     private Date updateDate;         // 최근수정날짜
     private String delYn;            // 삭제유무
 

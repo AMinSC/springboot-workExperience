@@ -47,7 +47,7 @@ public class DataController {
     	return ResponseEntity.ok(userDetail);
     }
     
-    @PostMapping("/CompanyDetail")
+    @PostMapping("/companyDetail")
     public ResponseEntity<CompanyDTO> getCompanyDetail(@RequestBody Map<String, String> request) {
     	String bzppOrderNo = request.get("bzppOrderNo");
     	CompanyDTO companyDetail = boardService.getCompanyDetail(bzppOrderNo);

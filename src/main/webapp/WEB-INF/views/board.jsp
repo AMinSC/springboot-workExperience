@@ -175,20 +175,57 @@
                             
                     	});
                     } else if (key === "companyDetail") {
-                    	$("#detail").html(
-                                "ID: " + rowData.userId + "<br>" +
-                                "Name: " + rowData.userName + "<br>" +
-                                "Phone: " + rowData.userPhon
+                    	$.ajax({
+                            url: '/api/companyDetail',
+                            method: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({ bzppOrderNo: rowData.bzppOrderNo }),
+                            success: function(data) {
+                    			$("#detail").html(
+                                "<div>사업자명: <span class='view-mode'>" + data.bzppNm + "</span><input class='edit-mode' type='text' value='" + data.bzppNm + "' style='display:none;'></div>" +
+                                "<div>사업자ID: <span class='view-mode'>" + data.bzppUserId + "</span><input class='edit-mode' type='text' value='" + data.bzppUserId + "' style='display:none;'></div>" +
+                                "<div>사업자폰: <span class='view-mode'>" + formatPhoneNumber(data.bzppPhone) + "</span><input class='edit-mode' type='text' value='" + formatPhoneNumber(data.bzppPhone) + "' style='display:none;'></div>" +
+                                "<div>주문번호: <span class='view-mode'>" + data.bzppOrderNo + "</span><input class='edit-mode' type='text' value='" + data.bzppOrderNo + "' style='display:none;' readonly></div>" +
+                                "<div>주소: <span class='view-mode'>" + data.mbrAddr + "</span><input class='edit-mode' type='text' value='" + data.bzppAddr + "' style='display:none;'></div>" +
+                                "<div>사업자번호: <span class='view-mode'>" + data.bzppNo + "</span><span class='edit-mode' style='display:none;'>" + data.bzppNo + "</span></div>" +
+                                "<div>사업자전화: <span class='view-mode'>" + formatPhoneNumber(data.bzppTel) + "</span><input class='edit-mode' type='text' value='" + formatPhoneNumber(data.bzppTel) + "' style='display:none;'></div>" +
+                                "<div>탈퇴여부: <span class='view-mode'>" + data.delYn + "</span><input class='edit-mode' type='text' value='" + data.delYn + "' style='display:none;'></div>"
                             );
+                            
                             $("#detail").dialog({
                                 title: "사업자정보상세",
                                 modal: true,
                                 buttons: {
-                                    Ok: function() {
+                                    "수정": function() {
+                                        $(".view-mode").hide();
+                                        $(".edit-mode").show();
+                                    },
+                                    "저장": function() {
+                                        // Save the changes
+                                        // Implement your save logic here
+                                        var updatedData = {
+                                        		bzppNm: $(".edit-mode").eq(0).val(),
+                                        		bzppUserId: $(".edit-mode").eq(1).val(),
+                                        		bzppPhone: $(".edit-mode").eq(2).val(),
+                                        		bzppOrderNo: $(".edit-mode").eq(3).val(),
+                                        		bzppAddr: $(".edit-mode").eq(4).val(),
+                                        		bzppNo: data.bzppNo,
+                                        		bzppTel: $(".edit-mode").eq(6).val(),
+                                        		delYn: $(".edit-mode").eq(7).val()
+                                        };
+                                        console.log(updatedData);
+                                        // Optionally, send updated data to the server
+                                        // $.ajax({...});
+                                        $(this).dialog("close");
+                                    },
+                                    "취소": function() {
                                         $(this).dialog("close");
                                     }
                                 }
                             });
+                            }
+                            
+                    	});
                     } else if (key === "productDetail") {
                     	$("#detail").html(
                                 "ID: " + rowData.userId + "<br>" +
