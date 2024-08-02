@@ -21,6 +21,15 @@
                 if (!phoneNumber) return '';
                 return phoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
             }
+            // 탈퇴여부 confrim Event
+            function handleChangeDelYn(name, currentDelYn) {
+                var confirmation = confirm(name + "님의 탈퇴상태 여부를 변경하시겠습니까?");
+                if (confirmation) {
+                    var newDelYn = (currentDelYn === 'Y') ? 'N' : 'Y';
+                    $(".edit-mode").eq(7).val(newDelYn);
+                    alert("탈퇴상태가 변경되었습니다.");
+                }
+            }
 
             // jqGrid 초기화
             $("#list").jqGrid({
@@ -137,7 +146,7 @@
                                 "<div>주소: <span class='view-mode'>" + data.mbrAddr + "</span><input class='edit-mode' type='text' value='" + data.mbrAddr + "' style='display:none;'></div>" +
                                 "<div>회원번호: <span class='view-mode'>" + data.mbrNo + "</span><span class='edit-mode' style='display:none;'>" + data.mbrNo + "</span></div>" +
                                 "<div>회원전화: <span class='view-mode'>" + formatPhoneNumber(data.mbrTel) + "</span><input class='edit-mode' type='text' value='" + formatPhoneNumber(data.mbrTel) + "' style='display:none;'></div>" +
-                                "<div>탈퇴여부: <span class='view-mode'>" + data.delYn + "</span><input class='edit-mode' type='text' value='" + data.delYn + "' style='display:none;'></div>"
+                                "<div>탈퇴여부: <span class='view-mode'>" + data.delYn + "</span><select class='edit-mode' style='display:none;'><option value='Y'>Y</option><option value='N'>N</option></select><button class='edit-mode' style='display:none;' id='changeDelYn'>변경</button></div>"
                             );
                             
                             $("#detail").dialog({
@@ -171,6 +180,12 @@
                                     }
                                 }
                             });
+                            
+                         	// 변경 버튼 클릭 이벤트
+                            $("#changeDelYn").click(function() {
+                                var currentDelYn = $(".edit-mode").eq(7).val();
+                                handleChangeDelYn(data.mbrNm, currentDelYn);
+                            });
                             }
                             
                     	});
@@ -189,7 +204,7 @@
                                 "<div>주소: <span class='view-mode'>" + data.mbrAddr + "</span><input class='edit-mode' type='text' value='" + data.bzppAddr + "' style='display:none;'></div>" +
                                 "<div>사업자번호: <span class='view-mode'>" + data.bzppNo + "</span><span class='edit-mode' style='display:none;'>" + data.bzppNo + "</span></div>" +
                                 "<div>사업자전화: <span class='view-mode'>" + formatPhoneNumber(data.bzppTel) + "</span><input class='edit-mode' type='text' value='" + formatPhoneNumber(data.bzppTel) + "' style='display:none;'></div>" +
-                                "<div>탈퇴여부: <span class='view-mode'>" + data.delYn + "</span><input class='edit-mode' type='text' value='" + data.delYn + "' style='display:none;'></div>"
+                                "<div>폐업여부: <span class='view-mode'>" + data.delYn + "</span><select class='edit-mode' style='display:none;'><option value='Y'>Y</option><option value='N'>N</option></select><button class='edit-mode' style='display:none;' id='changeDelYn'>변경</button></div>"
                             );
                             
                             $("#detail").dialog({
@@ -242,7 +257,7 @@
                                 "<div>주소: <span class='view-mode'>" + data.bzppAddr + "</span><input class='edit-mode' type='text' value='" + data.bzppAddr + "' style='display:none;'></div>" +
                                 "<div>사업자번호: <span class='view-mode'>" + data.bzppNo + "</span><span class='edit-mode' style='display:none;'>" + data.bzppNo + "</span></div>" +
                                 "<div>사업자전화: <span class='view-mode'>" + formatPhoneNumber(data.bzppTel) + "</span><input class='edit-mode' type='text' value='" + formatPhoneNumber(data.bzppTel) + "' style='display:none;'></div>" +
-                                "<div>탈퇴여부: <span class='view-mode'>" + data.delYn + "</span><input class='edit-mode' type='text' value='" + data.delYn + "' style='display:none;'></div>"
+                                "<div>제품삭제: <span class='view-mode'>" + data.delYn + "</span><select class='edit-mode' style='display:none;'><option value='Y'>Y</option><option value='N'>N</option></select><button class='edit-mode' style='display:none;' id='changeDelYn'>변경</button></div>"
                             );
                             
                             $("#detail").dialog({

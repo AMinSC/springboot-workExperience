@@ -67,6 +67,20 @@
 	    AND MBR_SQNO = #{mbrSqno}
 	</select>
 	
+	<!-- <update id="updateAuthor" parameterType="com.example.demo.dto.UserDTO" flushCache="true"
+  			statementType="PREPARED" timeout="20">
+  		UPDATE TBAXMM003 set
+  			mbrNm = 
+  			mbrUserId = 
+  			mbrPhone = 
+  			bzppOrderNo = 
+  			mbrAddr = 
+  			mbrNo = 
+  			mbrTel = 
+  			delYn = 
+  		WHERE mbrSqno = #{mbrSqno}
+  	</update> -->
+	
 	
 	<!-- Company Start -->
 	<select id="getCompanyDetail" resultType="com.example.demo.dto.CompanyDTO">
@@ -91,7 +105,7 @@
 	</select>
 	
 	
-	<!-- Company Start -->
+	<!-- Product Start -->
 	<select id="getProductDetail" resultType="com.example.demo.dto.ProductDTO">
 	    SELECT 
 	        p.PDT_SQNO as pdtSqno,
