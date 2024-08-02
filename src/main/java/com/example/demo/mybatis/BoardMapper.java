@@ -24,4 +24,10 @@ public interface BoardMapper {
 	CompanyDTO getCompanyDetail(String bzppOrderNo);
 	
 	ProductDTO getProductDetail(String pdtSqno);
+	
+	void userUpdate(UserDTO user);
+	
+	void companyUpdate(CompanyDTO company);
+	
+	void productUpdate(ProductDTO prodcut); 
 }

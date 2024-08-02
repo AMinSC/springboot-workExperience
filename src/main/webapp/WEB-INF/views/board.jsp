@@ -21,23 +21,22 @@
                 if (!phoneNumber) return '';
                 return phoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
             }
-            // 탈퇴여부 confrim Event
+            // 탈퇴여부 confirm Event
             function handleChangeDelYn(name, currentDelYn) {
-                var confirmation = confirm(name + "님의 탈퇴상태 여부를 변경하시겠습니까?");
+                var confirmation = confirm(name + "의 상태값을 변경하시겠습니까?");
                 if (confirmation) {
                     var newDelYn = (currentDelYn === 'Y') ? 'N' : 'Y';
                     $(".edit-mode").eq(7).val(newDelYn);
-                    alert("탈퇴상태가 변경되었습니다.");
                 }
             }
 
             // jqGrid 초기화
             $("#list").jqGrid({
-                url: '/api/data',  // 데이터를 가져올 서버 엔드포인트
-                datatype: "json",  // 데이터 타입 설정
+                url: '/api/data', 
+                datatype: "json", 
                 cellEdit: true,
                 colNames:['회원명', '회원아이디', '회원폰번호', '주문번호', '제품번호', '제품명', '사업자명', '사업자폰', '사업자주소', '삭제유무', '회원일련번호', '제품일련번호', '사업자일련번호'],  // 컬럼명
-                colModel:[        // 컬럼 모델 설정
+                colModel:[  
                     {name:'mbrNm', index:'mbrNm', align:'center', width:100},
                     {name:'mbrUserId', index:'mbrUserId', align:'center', width:100},
                     {name:'mbrPhone', index:'mbrPhone', align:'center', width:100, formatter: function(cellValue) { return formatPhoneNumber(cellValue) }},
@@ -53,8 +52,8 @@
                     {name:'bzppSqno', index:'bzppSqno', align:'center', width:150, hidden: true}
                 ],
                 loadtext: "로딩중..",
-                height: 250,      // 그리드 높이
-                caption: "데이터 목록",  // 그리드 타이틀
+                height: 250,      		// 그리드 높이
+                caption: "데이터 목록",  	// 그리드 타이틀
                 jsonReader : {
                     repeatitems: false,
                     id: "0",
@@ -63,15 +62,15 @@
                 loadError: function(xhr, status, error) {
                     alert('Load Error: ' + error);
                 },
-                pager: "#pager",  // 페이지 네비게이션을 위한 설정
-                rowNum: 10,  // 한 페이지에 보여질 행의 수
-                rowList: [10, 20, 30],  // 페이지 네비게이션에 표시될 옵션
-                sortname: 'userName',  // 초기 정렬 컬럼
+                pager: "#pager",  					// 페이지 네비게이션을 위한 설정
+                rowNum: 10,  						// 한 페이지에 보여질 행의 수
+                rowList: [10, 20, 30],  			// 페이지 네비게이션에 표시될 옵션
+                sortname: 'userName',  				// 초기 정렬 컬럼
                 sortable: true,
-                sortorder: "desc",  // 초기 정렬 방식
-                viewrecords: true,  // 레코드 수를 보여줄지 여부
-                gridview: true,  // 향상된 성능을 위한 설정
-                autoencode: true,  // XSS 방지를 위한 설정
+                sortorder: "desc",  				// 초기 정렬 방식
+                viewrecords: true,  				// 레코드 수를 보여줄지 여부
+                gridview: true,  					// 향상된 성능을 위한 설정
+                autoencode: true,  					// XSS 방지를 위한 설정
                 editurl: '/api/updateDormantUser',  // 데이터를 업데이트할 서버 엔드포인트
                 loadComplete: function() {
                     var ids = $("#list").jqGrid('getDataIDs');
@@ -139,10 +138,10 @@
                             data: JSON.stringify({ mbrSqno: rowData.mbrSqno }),
                             success: function(data) {
                     			$("#detail").html(
-                                "<div>회원명: <span class='view-mode'>" + data.mbrNm + "</span><input class='edit-mode' type='text' value='" + data.mbrNm + "' style='display:none;'></div>" +
-                                "<div>회원아이디: <span class='view-mode'>" + data.mbrUserId + "</span><input class='edit-mode' type='text' value='" + data.mbrUserId + "' style='display:none;'></div>" +
+                                "<div>회원명: <span class='view-mode'>" + data.mbrNm + "</span><span class='edit-mode' style='display:none;'>" + data.mbrNm + "</span></div>" +
+                                "<div>회원아이디: <span class='view-mode'>" + data.mbrUserId + "</span><span class='edit-mode' style='display:none;'>" + data.mbrUserId + "</span></div>" +
                                 "<div>회원폰번호: <span class='view-mode'>" + formatPhoneNumber(data.mbrPhone) + "</span><input class='edit-mode' type='text' value='" + formatPhoneNumber(data.mbrPhone) + "' style='display:none;'></div>" +
-                                "<div>주문번호: <span class='view-mode'>" + data.bzppOrderNo + "</span><input class='edit-mode' type='text' value='" + data.bzppOrderNo + "' style='display:none;' readonly></div>" +
+                                "<div>주문번호: <span class='view-mode'>" + data.bzppOrderNo + "</span><span class='edit-mode' style='display:none;'>" + data.bzppOrderNo + "</span></div>" +
                                 "<div>주소: <span class='view-mode'>" + data.mbrAddr + "</span><input class='edit-mode' type='text' value='" + data.mbrAddr + "' style='display:none;'></div>" +
                                 "<div>회원번호: <span class='view-mode'>" + data.mbrNo + "</span><span class='edit-mode' style='display:none;'>" + data.mbrNo + "</span></div>" +
                                 "<div>회원전화: <span class='view-mode'>" + formatPhoneNumber(data.mbrTel) + "</span><input class='edit-mode' type='text' value='" + formatPhoneNumber(data.mbrTel) + "' style='display:none;'></div>" +
@@ -158,13 +157,11 @@
                                         $(".edit-mode").show();
                                     },
                                     "저장": function() {
-                                        // Save the changes
-                                        // Implement your save logic here
                                         var updatedData = {
-                                        		mbrNm: $(".edit-mode").eq(0).val(),
-                                        		mbrUserId: $(".edit-mode").eq(1).val(),
+                                        		mbrNm: data.mbrNm,
+                                        		mbrUserId: data.mbrUserId,
                                         		mbrPhone: $(".edit-mode").eq(2).val(),
-                                        		bzppOrderNo: $(".edit-mode").eq(3).val(),
+                                        		bzppOrderNo: data.bzppOrderNo,
                                         		mbrAddr: $(".edit-mode").eq(4).val(),
                                         		mbrNo: data.mbrNo,
                                         		mbrTel: $(".edit-mode").eq(6).val(),
@@ -172,7 +169,12 @@
                                         };
                                         console.log(updatedData);
                                         // Optionally, send updated data to the server
-                                        // $.ajax({...});
+                                        $.ajax({
+                                        	url: '/api/userUpdate',
+                                            method: 'POST',
+                                            contentType: 'application/json',
+										});
+                                        
                                         $(this).dialog("close");
                                     },
                                     "취소": function() {
@@ -197,10 +199,10 @@
                             data: JSON.stringify({ bzppOrderNo: rowData.bzppOrderNo }),
                             success: function(data) {
                     			$("#detail").html(
-                                "<div>사업자명: <span class='view-mode'>" + data.bzppNm + "</span><input class='edit-mode' type='text' value='" + data.bzppNm + "' style='display:none;'></div>" +
-                                "<div>사업자ID: <span class='view-mode'>" + data.bzppUserId + "</span><input class='edit-mode' type='text' value='" + data.bzppUserId + "' style='display:none;'></div>" +
+                                "<div>사업자명: <span class='view-mode'>" + data.bzppNm + "</span><span class='edit-mode' style='display:none;'>" + data.bzppNm + "</span></div>" +
+                                "<div>사업자ID: <span class='view-mode'>" + data.bzppUserId + "</span><span class='edit-mode' style='display:noen;'>" + data.bzppUserId + "</span></div>" +
                                 "<div>사업자폰: <span class='view-mode'>" + formatPhoneNumber(data.bzppPhone) + "</span><input class='edit-mode' type='text' value='" + formatPhoneNumber(data.bzppPhone) + "' style='display:none;'></div>" +
-                                "<div>주문번호: <span class='view-mode'>" + data.bzppOrderNo + "</span><input class='edit-mode' type='text' value='" + data.bzppOrderNo + "' style='display:none;' readonly></div>" +
+                                "<div>주문번호: <span class='view-mode'>" + data.bzppOrderNo + "</span><span class='edit-mode' style='display:noen;'>" + data.bzppOrderNo + "</span></div>" +
                                 "<div>주소: <span class='view-mode'>" + data.mbrAddr + "</span><input class='edit-mode' type='text' value='" + data.bzppAddr + "' style='display:none;'></div>" +
                                 "<div>사업자번호: <span class='view-mode'>" + data.bzppNo + "</span><span class='edit-mode' style='display:none;'>" + data.bzppNo + "</span></div>" +
                                 "<div>사업자전화: <span class='view-mode'>" + formatPhoneNumber(data.bzppTel) + "</span><input class='edit-mode' type='text' value='" + formatPhoneNumber(data.bzppTel) + "' style='display:none;'></div>" +
@@ -216,13 +218,11 @@
                                         $(".edit-mode").show();
                                     },
                                     "저장": function() {
-                                        // Save the changes
-                                        // Implement your save logic here
                                         var updatedData = {
-                                        		bzppNm: $(".edit-mode").eq(0).val(),
-                                        		bzppUserId: $(".edit-mode").eq(1).val(),
+                                        		bzppNm: data.bzppNm,
+                                        		bzppUserId: data.bzppUserId,
                                         		bzppPhone: $(".edit-mode").eq(2).val(),
-                                        		bzppOrderNo: $(".edit-mode").eq(3).val(),
+                                        		bzppOrderNo: data.bzppOrderNo,
                                         		bzppAddr: $(".edit-mode").eq(4).val(),
                                         		bzppNo: data.bzppNo,
                                         		bzppTel: $(".edit-mode").eq(6).val(),
@@ -230,13 +230,24 @@
                                         };
                                         console.log(updatedData);
                                         // Optionally, send updated data to the server
-                                        // $.ajax({...});
+                                        $.ajax({
+                                        	url: '/api/companyUpdate',
+                                            method: 'POST',
+                                            contentType: 'application/json',
+										});
+                                        
                                         $(this).dialog("close");
                                     },
                                     "취소": function() {
                                         $(this).dialog("close");
                                     }
                                 }
+                            });
+                            
+                         	// 변경 버튼 클릭 이벤트
+                            $("#changeDelYn").click(function() {
+                                var currentDelYn = $(".edit-mode").eq(7).val();
+                                handleChangeDelYn(data.mbrNm, currentDelYn);
                             });
                             }
                             
@@ -250,10 +261,10 @@
                             success: function(data) {
                             	console.log(data)
                     			$("#detail").html(
-                                "<div>제품명: <span class='view-mode'>" + data.pdtNm + "</span><input class='edit-mode' type='text' value='" + data.pdtNm + "' style='display:none;'></div>" +
-                                "<div>사업자ID: <span class='view-mode'>" + data.bzppUserId + "</span><input class='edit-mode' type='text' value='" + data.bzppUserId + "' style='display:none;'></div>" +
+                                "<div>제품명: <span class='view-mode'>" + data.pdtNm + "</span><span class='edit-mode' style='display:none'>" + data.pdtNm + "</span></div>" +
+                                "<div>사업자ID: <span class='view-mode'>" + data.bzppUserId + "</span><span class='edit-mode' style='display:none;'>" + data.bzppUserId + "</span></div>" +
                                 "<div>사업자폰: <span class='view-mode'>" + formatPhoneNumber(data.bzppPhone) + "</span><input class='edit-mode' type='text' value='" + formatPhoneNumber(data.bzppPhone) + "' style='display:none;'></div>" +
-                                "<div>주문번호: <span class='view-mode'>" + data.bzppOrderNo + "</span><input class='edit-mode' type='text' value='" + data.bzppOrderNo + "' style='display:none;' readonly></div>" +
+                                "<div>주문번호: <span class='view-mode'>" + data.bzppOrderNo + "</span><span class='edit-mode' style='display:noen;'>" + data.bzppOrderNo + "</span></div>" +
                                 "<div>주소: <span class='view-mode'>" + data.bzppAddr + "</span><input class='edit-mode' type='text' value='" + data.bzppAddr + "' style='display:none;'></div>" +
                                 "<div>사업자번호: <span class='view-mode'>" + data.bzppNo + "</span><span class='edit-mode' style='display:none;'>" + data.bzppNo + "</span></div>" +
                                 "<div>사업자전화: <span class='view-mode'>" + formatPhoneNumber(data.bzppTel) + "</span><input class='edit-mode' type='text' value='" + formatPhoneNumber(data.bzppTel) + "' style='display:none;'></div>" +
@@ -269,13 +280,11 @@
                                         $(".edit-mode").show();
                                     },
                                     "저장": function() {
-                                        // Save the changes
-                                        // Implement your save logic here
                                         var updatedData = {
-                                        		pdtNm: $(".edit-mode").eq(0).val(),
-                                        		bzppUserId: $(".edit-mode").eq(1).val(),
+                                        		pdtNm: data.pdtNm,
+                                        		bzppUserId: data.bzppUserId,
                                         		bzppPhone: $(".edit-mode").eq(2).val(),
-                                        		bzppOrderNo: $(".edit-mode").eq(3).val(),
+                                        		bzppOrderNo: data.bzppOrderNo,
                                         		bzppAddr: $(".edit-mode").eq(4).val(),
                                         		bzppNo: data.bzppNo,
                                         		bzppTel: $(".edit-mode").eq(6).val(),
@@ -283,13 +292,24 @@
                                         };
                                         console.log(updatedData);
                                         // Optionally, send updated data to the server
-                                        // $.ajax({...});
+                                        $.ajax({
+                                        	url: '/api/productUpdate',
+                                            method: 'POST',
+                                            contentType: 'application/json',
+										});
+                                        
                                         $(this).dialog("close");
                                     },
                                     "취소": function() {
                                         $(this).dialog("close");
                                     }
                                 }
+                            });
+                            
+                         	// 변경 버튼 클릭 이벤트
+                            $("#changeDelYn").click(function() {
+                                var currentDelYn = $(".edit-mode").eq(7).val();
+                                handleChangeDelYn(data.mbrNm, currentDelYn);
                             });
                             }
                             

@@ -35,4 +35,16 @@ public class BoardService {
     public ProductDTO getProductDetail(String pdtSqno) {
     	return boardMapper.getProductDetail(pdtSqno);
     }
+    
+    public void userUpdate(UserDTO user) {
+    	boardMapper.userUpdate(user);
+    }
+    
+    public void companyUpdate(CompanyDTO company) {
+    	boardMapper.companyUpdate(company);
+    }
+    
+    public void productUpdate(ProductDTO product) {
+    	boardMapper.productUpdate(product);
+    }
 }

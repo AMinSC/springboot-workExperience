@@ -45,6 +45,8 @@
         SET DEL_YN = #{delYn}
         WHERE MBR_SQNO = #{mbrSqno}
     </update>
+    
+    
     <!-- User Start -->
     <select id="getUserDetail" resultType="com.example.demo.dto.UserDTO">
 	    SELECT 
@@ -67,19 +69,15 @@
 	    AND MBR_SQNO = #{mbrSqno}
 	</select>
 	
-	<!-- <update id="updateAuthor" parameterType="com.example.demo.dto.UserDTO" flushCache="true"
+	<update id="userUpdate" parameterType="com.example.demo.dto.UserDTO" flushCache="true"
   			statementType="PREPARED" timeout="20">
-  		UPDATE TBAXMM003 set
-  			mbrNm = 
-  			mbrUserId = 
-  			mbrPhone = 
-  			bzppOrderNo = 
-  			mbrAddr = 
-  			mbrNo = 
-  			mbrTel = 
-  			delYn = 
+  		UPDATE TBAXMM003 set 
+  			mbrPhone = #{mbrPhone}
+  			, mbrAddr = #{mbrAddr}
+  			, mbrTel = #{mbrTel}
+  			, delYn = #{delYn}
   		WHERE mbrSqno = #{mbrSqno}
-  	</update> -->
+  	</update>
 	
 	
 	<!-- Company Start -->
@@ -117,7 +115,7 @@
 		    p.DLVY_STAT_CD as dlvyStatCd,
     		p.DEL_YN as delYn,
     		b.BZPP_USER_ID as bzppUserId,
-    		b.BZPP_PHONE as bzppPhon,
+    		b.BZPP_PHONE as bzppPhone,
     		b.BZPP_ORDER_NO as bzppOrderNo,
     		b.BZPP_ADDR as bzppAddr,
     		b.BZPP_NO as bzppNo,

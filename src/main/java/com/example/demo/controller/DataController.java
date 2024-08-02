@@ -39,12 +39,11 @@ public class DataController {
     	boardService.updateDormantUser(id, dormantUser);
     }
     
+    
     @PostMapping("/userDetail")
     public ResponseEntity<UserDTO> getUserDetail(@RequestBody Map<String, String> request) {
     	String mbrSqno = request.get("mbrSqno");
-    	System.out.println("Received mbrSqno: " + mbrSqno); // 로그 추가
     	UserDTO userDetail = boardService.getUserDetail(mbrSqno);
-    	System.out.println("Returning user detail: " + userDetail); // 로그 추가
     	return ResponseEntity.ok(userDetail);
     }
     
@@ -60,5 +59,21 @@ public class DataController {
     	String pdtSqno = request.get("pdtSqno");
     	ProductDTO productDetail = boardService.getProductDetail(pdtSqno);
     	return ResponseEntity.ok(productDetail);
+    }
+    
+
+    @PostMapping("/userUpdate")
+    public void userUpdate(@RequestBody Map<String, String> request) {
+    	//
+    }
+    
+    @PostMapping("/companyUpdate")
+    public void companyUpdate(@RequestBody Map<String, String> request) {
+    	//
+    }
+    
+    @PostMapping("/productUpdate")
+    public void productUpdate(@RequestBody Map<String, String> request) {
+    	//
     }
 }
