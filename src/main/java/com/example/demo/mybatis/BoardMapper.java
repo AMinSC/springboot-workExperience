@@ -29,5 +29,7 @@ public interface BoardMapper {
 	
 	void companyUpdate(CompanyDTO company);
 	
-	void productUpdate(ProductDTO prodcut); 
+	void productUpdate(ProductDTO prodcut);
+	
+	void productDetailCompanyUpdate(ProductDTO product);
 }

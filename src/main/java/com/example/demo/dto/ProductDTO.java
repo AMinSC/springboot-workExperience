@@ -73,10 +73,10 @@ public class ProductDTO {
 	public void setBzppUserId(String bzppUserId) {
 		this.bzppUserId = bzppUserId;
 	}
-	public String getBzppPhon() {
+	public String getBzppPhone() {
 		return bzppPhone;
 	}
-	public void setBzppPhon(String bzppPhone) {
+	public void setBzppPhone(String bzppPhone) {
 		this.bzppPhone = bzppPhone;
 	}
 	public String getBzppOrderNo() {

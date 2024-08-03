@@ -138,5 +138,21 @@
 	    AND p.BZPP_SQNO = b.BZPP_SQNO
 	    
 	</select>
+	
+	<update id="productUpdate" parameterType="com.example.demo.dto.ProductDTO" flushCache="true"
+  			statementType="PREPARED" timeout="20">
+  		UPDATE TBAXPM001 set 
+  			DEL_YN = #{delYn}
+  		WHERE PDT_SQNO = #{pdtSqno}
+  	</update>
+  	
+  	<update id="productDetailCompanyUpdate" parameterType="com.example.demo.dto.ProductDTO" flushCache="true"
+  			statementType="PREPARED" timeout="20">
+  		UPDATE TBAXBM001 set 
+  			BZPP_PHONE = #{bzppPhone}
+  			, BZPP_ADDR = #{bzppAddr}
+  			, BZPP_TEL = #{bzppTel}
+  		WHERE BZPP_SQNO = #{bzppSqno}
+  	</update>
 
 </mapper>
