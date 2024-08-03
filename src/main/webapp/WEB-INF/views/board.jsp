@@ -145,8 +145,11 @@
                                 "<div>주소: <span class='view-mode'>" + data.mbrAddr + "</span><input class='edit-mode' type='text' value='" + data.mbrAddr + "' style='display:none;'></div>" +
                                 "<div>회원번호: <span class='view-mode'>" + data.mbrNo + "</span><span class='edit-mode' style='display:none;'>" + data.mbrNo + "</span></div>" +
                                 "<div>회원전화: <span class='view-mode'>" + formatPhoneNumber(data.mbrTel) + "</span><input class='edit-mode' type='text' value='" + formatPhoneNumber(data.mbrTel) + "' style='display:none;'></div>" +
-                                "<div>탈퇴여부: <span class='view-mode'>" + data.delYn + "</span><select class='edit-mode' style='display:none;'><option value='Y'>Y</option><option value='N'>N</option></select><button class='edit-mode' style='display:none;' id='changeDelYn'>변경</button></div>"
+                                "<div>탈퇴여부: <span class='view-mode'>" + data.delYn + "</span><select class='edit-mode' style='display:none;' id='delYnSelect'><option value='Y'>Y</option><option value='N'>N</option></select><button class='edit-mode' style='display:none;' id='changeDelYn'>변경</button></div>"
                             );
+                    			
+                   			// 설정된 delYn 값으로 select 요소의 기본값 설정
+                            $("#delYnSelect").val(data.delYn);
                             
                             $("#detail").dialog({
                                 title: "회원정보 상세 및 수정",
@@ -219,8 +222,11 @@
                                 "<div>주소: <span class='view-mode'>" + data.mbrAddr + "</span><input class='edit-mode' type='text' value='" + data.bzppAddr + "' style='display:none;'></div>" +
                                 "<div>사업자번호: <span class='view-mode'>" + data.bzppNo + "</span><span class='edit-mode' style='display:none;'>" + data.bzppNo + "</span></div>" +
                                 "<div>사업자전화: <span class='view-mode'>" + formatPhoneNumber(data.bzppTel) + "</span><input class='edit-mode' type='text' value='" + formatPhoneNumber(data.bzppTel) + "' style='display:none;'></div>" +
-                                "<div>폐업여부: <span class='view-mode'>" + data.delYn + "</span><select class='edit-mode' style='display:none;'><option value='Y'>Y</option><option value='N'>N</option></select><button class='edit-mode' style='display:none;' id='changeDelYn'>변경</button></div>"
+                                "<div>폐업여부: <span class='view-mode'>" + data.delYn + "</span><select class='edit-mode' style='display:none;' id='delYnSelect'><option value='Y'>Y</option><option value='N'>N</option></select><button class='edit-mode' style='display:none;' id='changeDelYn'>변경</button></div>"
                             );
+                    			
+                   			// 설정된 delYn 값으로 select 요소의 기본값 설정
+                            $("#delYnSelect").val(data.delYn);
                             
                             $("#detail").dialog({
                                 title: "사업자정보 상세 및 수정",
@@ -273,7 +279,7 @@
                          	// 변경 버튼 클릭 이벤트
                             $("#changeDelYn").click(function() {
                                 var currentDelYn = $(".edit-mode").eq(7).val();
-                                handleChangeDelYn(data.mbrNm, currentDelYn);
+                                handleChangeDelYn(data.bzppNm, currentDelYn);
                             });
                             }
                             
@@ -294,8 +300,11 @@
                                 "<div>주소: <span class='view-mode'>" + data.bzppAddr + "</span><input class='edit-mode' type='text' value='" + data.bzppAddr + "' style='display:none;'></div>" +
                                 "<div>사업자번호: <span class='view-mode'>" + data.bzppNo + "</span><span class='edit-mode' style='display:none;'>" + data.bzppNo + "</span></div>" +
                                 "<div>사업자전화: <span class='view-mode'>" + formatPhoneNumber(data.bzppTel) + "</span><input class='edit-mode' type='text' value='" + formatPhoneNumber(data.bzppTel) + "' style='display:none;'></div>" +
-                                "<div>제품삭제: <span class='view-mode'>" + data.delYn + "</span><select class='edit-mode' style='display:none;'><option value='Y'>Y</option><option value='N'>N</option></select><button class='edit-mode' style='display:none;' id='changeDelYn'>변경</button></div>"
+                                "<div>제품삭제: <span class='view-mode'>" + data.delYn + "</span><select class='edit-mode' style='display:none;' id='delYnSelect'><option value='Y'>Y</option><option value='N'>N</option></select><button class='edit-mode' style='display:none;' id='changeDelYn'>변경</button></div>"
                             );
+                            	
+                           	// 설정된 delYn 값으로 select 요소의 기본값 설정
+                            $("#delYnSelect").val(data.delYn);
                             
                             $("#detail").dialog({
                                 title: "사업자정보 상세 및 수정",
@@ -349,7 +358,7 @@
                          	// 변경 버튼 클릭 이벤트
                             $("#changeDelYn").click(function() {
                                 var currentDelYn = $(".edit-mode").eq(7).val();
-                                handleChangeDelYn(data.mbrNm, currentDelYn);
+                                handleChangeDelYn(data.pdtNm, currentDelYn);
                             });
                             }
                             
