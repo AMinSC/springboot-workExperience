@@ -63,8 +63,9 @@ public class DataController {
     
 
     @PostMapping("/userUpdate")
-    public void userUpdate(@RequestBody Map<String, String> request) {
-    	//
+    public ResponseEntity<String> userUpdate(@RequestBody UserDTO user) {
+    	boardService.userUpdate(user);
+    	return ResponseEntity.ok("User updated successfully");
     }
     
     @PostMapping("/companyUpdate")

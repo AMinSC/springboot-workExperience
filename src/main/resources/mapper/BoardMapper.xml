@@ -72,11 +72,11 @@
 	<update id="userUpdate" parameterType="com.example.demo.dto.UserDTO" flushCache="true"
   			statementType="PREPARED" timeout="20">
   		UPDATE TBAXMM003 set 
-  			mbrPhone = #{mbrPhone}
-  			, mbrAddr = #{mbrAddr}
-  			, mbrTel = #{mbrTel}
-  			, delYn = #{delYn}
-  		WHERE mbrSqno = #{mbrSqno}
+  			MBR_PHONE = #{mbrPhone}
+  			, MBR_ADDR = #{mbrAddr}
+  			, MBR_TEL = #{mbrTel}
+  			, DEL_YN = #{delYn}
+  		WHERE MBR_SQNO = #{mbrSqno}
   	</update>
 	
 	

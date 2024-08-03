@@ -173,6 +173,19 @@
                                         	url: '/api/userUpdate',
                                             method: 'POST',
                                             contentType: 'application/json',
+                                            data: JSON.stringify({
+                                            	mbrPhone: $(".edit-mode").eq(2).val().replaceAll("-", ""),
+                                                mbrAddr: $(".edit-mode").eq(4).val(),
+                                                mbrTel: $(".edit-mode").eq(6).val().replaceAll("-", ""),
+                                                delYn: $(".edit-mode").eq(7).val(),
+                                                mbrSqno: data.mbrSqno
+                                            }),
+                                            success: function(response) {
+                                                console.log(response);
+                                            },
+                                            error: function(error) {
+                                                console.error("Error updating user:", error);
+                                            }
 										});
                                         
                                         $(this).dialog("close");
@@ -233,7 +246,7 @@
                                         $.ajax({
                                         	url: '/api/companyUpdate',
                                             method: 'POST',
-                                            contentType: 'application/json',
+                                            contentType: 'application/json'
 										});
                                         
                                         $(this).dialog("close");
