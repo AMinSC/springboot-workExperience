@@ -246,7 +246,20 @@
                                         $.ajax({
                                         	url: '/api/companyUpdate',
                                             method: 'POST',
-                                            contentType: 'application/json'
+                                            contentType: 'application/json',
+                                            data: JSON.stringify({
+                                            	bzppPhone: $(".edit-mode").eq(2).val().replaceAll("-", ""),
+                                            	bzppAddr: $(".edit-mode").eq(4).val(),
+                                            	bzppTel: $(".edit-mode").eq(6).val().replaceAll("-", ""),
+                                            	delYn: $(".edit-mode").eq(7).val(),
+                                                bzppSqno: data.bzppSqno
+                                            }),
+                                            success: function(response) {
+                                                console.log(response);
+                                            },
+                                            error: function(error) {
+                                                console.error("Error updating company:", error);
+                                            }
 										});
                                         
                                         $(this).dialog("close");

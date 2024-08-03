@@ -102,6 +102,16 @@
 	    AND BZPP_ORDER_NO = #{bzppOrderNo}
 	</select>
 	
+	<update id="companyUpdate" parameterType="com.example.demo.dto.CompanyDTO" flushCache="true"
+  			statementType="PREPARED" timeout="20">
+  		UPDATE TBAXBM001 set 
+  			BZPP_PHONE = #{bzppPhone}
+  			, BZPP_ADDR = #{bzppAddr}
+  			, BZPP_TEL = #{bzppTel}
+  			, DEL_YN = #{delYn}
+  		WHERE BZPP_SQNO = #{bzppSqno}
+  	</update>
+	
 	
 	<!-- Product Start -->
 	<select id="getProductDetail" resultType="com.example.demo.dto.ProductDTO">
