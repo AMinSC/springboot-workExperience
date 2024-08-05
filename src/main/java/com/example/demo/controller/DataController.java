@@ -8,6 +8,7 @@ import com.example.demo.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,8 +36,8 @@ public class DataController {
     }
     
     @PostMapping("/updateDormantUser")
-    public void updateDormantUser(@RequestParam("id") String id, @RequestParam("dormantUser") String dormantUser) {
-    	boardService.updateDormantUser(id, dormantUser);
+    public void updateDormantUser(@ModelAttribute BoardDTO board) {
+    	boardService.updateDormantUser(board.getMbrSqno(), board.getDelYn());
     }
     
     

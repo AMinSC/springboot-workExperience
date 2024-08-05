@@ -34,7 +34,6 @@
             $("#list").jqGrid({
                 url: '/api/data', 
                 datatype: "json", 
-                cellEdit: true,
                 colNames:['회원명', '회원아이디', '회원폰번호', '주문번호', '제품번호', '제품명', '사업자명', '사업자폰', '사업자주소', '삭제유무', '회원일련번호', '제품일련번호', '사업자일련번호'],  // 컬럼명
                 colModel:[  
                     {name:'mbrNm', index:'mbrNm', align:'center', width:100},
@@ -71,7 +70,17 @@
                 viewrecords: true,  				// 레코드 수를 보여줄지 여부
                 gridview: true,  					// 향상된 성능을 위한 설정
                 autoencode: true,  					// XSS 방지를 위한 설정
-                editurl: '/api/updateDormantUser',  // 데이터를 업데이트할 서버 엔드포인트
+                cellEdit: true,
+                cellsubmit: 'remote',
+                cellurl: '/api/updateDormantUser',
+                beforeSubmitCell: function(rowid, cellname, value, iRow, iCol) {
+                    var rowData = $('#list').jqGrid('getRowData', rowid);
+                    return {
+                        mbrSqno: rowData.mbrSqno, // 추가 데이터
+                        delYn: value // 편집된 셀의 값
+                    };
+                },
+                /* editurl: '/api/updateDormantUser',  // 데이터를 업데이트할 서버 엔드포인트 */
                 loadComplete: function() {
                     var ids = $("#list").jqGrid('getDataIDs');
                     gridData = {};

@@ -21,8 +21,8 @@ public class BoardService {
         return boardMapper.searchData(mbrNm, bzppOrderNo, bzppNm, pdtNm);
     }
     
-    public void updateDormantUser(String id, String dormantUser) {
-    	boardMapper.updateDormantUser(id, dormantUser);
+    public void updateDormantUser(String mbrSqno, String delYn) {
+    	boardMapper.updateDormantUser(mbrSqno, delYn);
     }
     
     public UserDTO getUserDetail(String mbrSqno) {

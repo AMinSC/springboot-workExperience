@@ -17,7 +17,7 @@ public interface BoardMapper {
                               @Param("bzppNm") String bzppNm, 
                               @Param("pdtNm") String pdtNm);
     
-    void updateDormantUser(@Param("id") String id, @Param("dormantUser") String dormantUser);
+    void updateDormantUser(String mbrSqno, String delYn);
     
     UserDTO getUserDetail(String mbrSqno);
     
