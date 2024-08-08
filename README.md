@@ -9,7 +9,7 @@
 Java(17), Spring Boot(3), JSP, MyBatis3, jQuery(3.7.1), jqGrid(4.16), OrcleDB(11g), ojdbc(19.8), Docker, Colima 
 - Java 8 버전을 사용하려고 했으나, Spring boot 3^ 버전부터 Java 17 버전까지만 지원하여 버전 업을 하였습니다. 
 - Oracle에서 Mac OS를 정식으로 지원하고 있지 않아 Docker Container를 활용하였습니다. 
-- Oracle(11g) Container Image의 경우 x86환경에 적합하여 Colima를 통해 x86_64 가상 환경을 제공하였습니다. (Container의 경우 호스트의 커널을 공유하고 x86_64 아키텍처용으로 빌드된 이미지는 MacBook의 ARM 아키텍처 호스트에서 실행되지 않습니다.) 
+- [Oracle(11g) Container Image의 경우 x86환경에 적합하여 Colima를 통해 x86_64 가상 환경을 제공하였습니다.](https://github.com/gvenzl/oci-oracle-xe/issues/63) (Container의 경우 호스트의 커널을 공유하고 x86_64 아키텍처용으로 빌드된 이미지는 MacBook의 ARM 아키텍처 호스트에서 실행되지 않습니다.) 
 - Colima 가상 머신은 독립된 커널을 사용하므로 호스트의 아키텍처와 관계없이 게스트 아키텍처를 지원할 수 있습니다. 
 - Colima는 Docker Desktop을 대신해서 Docker 엔진을 실행해 주는 역할을 합니다.
 - 기존 colima를 내리고 Virtual Machine인 VMware에 Windows OS로 올리고 서비스를 연결 시도중
