@@ -13,5 +13,6 @@ Java(17), Spring Boot(3), JSP, MyBatis3, jQuery(3.7.1), jqGrid(4.16), OrcleDB(11
 - Colima 가상 머신은 독립된 커널을 사용하므로 호스트의 아키텍처와 관계없이 게스트 아키텍처를 지원할 수 있습니다. 
 - Colima는 Docker Desktop을 대신해서 Docker 엔진을 실행해 주는 역할을 합니다.
 - 기존 colima를 내리고 Virtual Machine인 VMware에 Windows OS로 올리고 서비스를 연결 시도중
-  - listener 혹은 드라이버 문제로 지연중
+  - ~listener 혹은 드라이버 문제로 지연중~
+  - VMware 재 구성 후 가상환경인 윈도우 터미널에서`ipconfig`로 IP 체크 후 호스트인 맥북에서 ping test와 telnet 시도 후 성공적으로 연결 (초기에 VMware Network Adapter를 Bridged (Autodetect)로 설정) 
 #### [ERD](https://www.erdcloud.com/d/nD2WNk2GJWYL3mLNH)
